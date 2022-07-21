@@ -1,0 +1,293 @@
+
+
+.swal2-popup.swal2-toast .swal2-title{
+    margin-left: 15px!important;
+}
+.swal2-toast {
+    background-color: rgb(255, 255, 255)!important;
+}
+.swal2-popup.swal2-toast {
+    padding: 14px 20px !important;
+    font-size: 18px !important;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.15) !important;
+}
+.swal2-toast {
+    max-width: 370px !important;
+    border-radius: 0px !important;
+}
+.swal2-popup.swal2-toast .swal2-title {
+    font-size: 16px!important;
+}
+.swal2-popup {
+    border: 0px;
+    border-left: 4px solid #007bff !important;
+}
+.if{
+    width: 100%;
+}
+
+.vmidle{
+    vertical-align: middle !important;
+}
+.img-demo{
+    background-color: #fff;
+    border: 3px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    max-width: 100%;
+    height: auto;
+}
+.w-80{
+    max-width: 80px;
+}
+.w-60{
+    max-width: 60px;
+}
+.w-100{
+    max-width: 100px;
+}
+.w-40{
+    max-width: 40px;
+    max-height: 40px;
+}
+.ws-70{
+    max-width: 70px;
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+}
+.mw-400{
+    max-width: 400px;
+}
+.ws-100{
+    max-width: 100px;
+}
+.ws-150{
+    max-width: 150px;
+    background: #ddd;
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+}
+.w-50{
+    max-width: 50px;
+}
+.ws-200{
+    max-width: 200px;
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+}
+.btn i{
+    font-size: 13px!important;
+    margin-right: 4px;
+}
+.h80{
+    height: 150px!important;
+}
+.drop-img .custom-file-label::after{
+   display: none;
+}
+
+.drop-img .custom-file-label{
+    padding-top: 60px;
+    border: 2px dashed #ddd!important;
+}
+.drop-img .custom-file-label h5{
+    font-weight: 600;
+    font-size: 24px;
+    color: #b4b1bd;
+}
+
+.elevation-4 {
+    box-shadow: 0 0 3px rgba(0,0,0,.25)!important;
+}
+.content-header .breadcrumb a{
+    color: #212529;
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -ms-transition: all linear .3s;
+    transition: all linear .3s;
+}
+.content-header .breadcrumb a:hover{
+    color: #007bff;
+}
+.content-header .breadcrumb a i{
+    margin-right: 5px;
+}
+.shadow-none{
+    -webkit-box-shadow: unset!important;
+    box-shadow: unset!important;
+}
+.border-none{
+    border: 0px!important;
+}
+.widget-user-2 .widget-user-username{
+    font-weight: 600;
+    font-size: 18px;
+}
+.widget-user-2 .widget-user-desc{
+    font-size: 14px;
+}
+/* [class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link.active:hover
+{
+    background-color: rgba(0, 123, 255, 0.1)!important;
+}
+[class*=sidebar-light-] .nav-sidebar>.nav-item.menu-open>.nav-link, [class*=sidebar-light-] .nav-sidebar>.nav-item:hover>.nav-link,
+[class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link:hover 
+{
+    background-color: rgba(0, 123, 255, 0.1)!important;
+}
+.nav-pills .nav-link:not(.active):hover,
+[class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link.active
+ {
+    color: #212529!important;
+} */
+
+/* [class*=sidebar-light-] .nav-sidebar>.nav-item:hover>.nav-link{
+    background-color: rgba(0, 123, 255, 0.1);
+}
+.sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active:hover {
+    background-color: #007bff!important;
+}
+.sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #007bff!important;
+} */
+
+.content-header h1{
+    font-size: 22px;
+    font-weight: 600;
+}
+.pagination{
+    margin-bottom: 0px;
+}
+
+.nicEdit-main:focus{
+    outline: 0px;
+}
+.sidebar .user-panel{
+    padding: 20px 0px 12px;
+    margin-bottom: 15px;
+}
+.bootstrap-switch .bootstrap-switch-handle-off, 
+.bootstrap-switch .bootstrap-switch-handle-on, 
+.bootstrap-switch .bootstrap-switch-label {
+    text-align: center;
+}
+.user-panel .info a{
+    font-size: 15px;
+    line-height: 15px;
+    margin-bottom: 0px;
+}
+.user-panel .info span{
+    font-size: 12px;
+    line-height: 15px;
+    position: relative;
+    top: -2px;
+}
+.user-panel img{
+    border-radius: 3px;
+    width: 40px;
+    height: 40px;
+}
+.user-panel .image{
+    padding-left: 10px!important;
+}
+.form-group.note-form-group.note-group-select-from-files {
+    display: none!important;
+}
+.table thead th{
+    border-top: 1px solid #dee2e6!important;
+}
+.table thead th {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.page-item.active .page-link {
+    background-color: #28a745 !important;
+    border-color: #28a745!important;
+    color: #fff!important;
+}
+.page-link{
+    color: #28a745!important;
+}
+.sp-preview {
+    width: 150px !important;
+    height: 25px !important;
+}
+.sp-palette .sp-thumb-el {
+    width: 20px;
+    height: 20px;
+}
+
+.main-header .navbar-nav .mybtn9 {
+    position: relative;
+    top: -1px;
+    padding: 2px 8px;
+    font-size: 14px;
+}
+.main-header .navbar-nav .mybtn9 i {
+    margin-right: 6px;
+    position: relative;
+    top: 1px;
+}
+
+.slider{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.slider .mg{
+    padding-left: 10px;
+    padding-right: 10px;
+    max-width: 50%;
+    flex: 50%;
+    margin-bottom: 20px;
+}
+.slider .img{
+    border: 3px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    position: relative;
+}
+.slider .img .overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -ms-transition: all linear .3s;
+    transition: all linear .3s;
+}
+.slider .img:hover .overlay{
+    opacity: 1;
+}
+.slider .img .overlay a{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    display: inline-block;
+    font-size: 30px;
+}
+
+/* image table preview for dropzone edit form start */
+
+.dropzone {
+    background: white;
+    border-radius: 5px;
+    border: 2px dashed rgba(0, 0, 0, 0.3);
+    border-image: none;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.dropzone.dz-clickable .dz-message{
+    font-size: 22px;
+}
+/* image table preview for dropzone edit form end */
+.edit-slider{
+    display: inline-block;
+    margin: 5px;
+}
+.edit-slider img{
+    max-width: 200px;
+    display: block;
+}
