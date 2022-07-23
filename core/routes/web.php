@@ -18,6 +18,8 @@ Route::group(['middleware' => 'setlang'], function(){
 
     Route::get('/', 'Front\FrontController@index')->name('front.index');
 
+    Route::get('/changelanguage/{lang}', 'Front\FrontController@changeLanguage')->name('changeLanguage');
+
 
     Route::get('/shop','Front\ProductController@products')->name('front.products');
     Route::get('/product/product-details/{slug}','Front\ProductController@product_details')->name('front.product_details');
@@ -120,6 +122,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/slider/edit/{id}/', 'Admin\SliderController@edit')->name('admin.slider.edit');
     Route::post('/slider/update/{id}/', 'Admin\SliderController@update')->name('admin.slider.update');
 
+    // E-Banner Routes
+    Route::get('/ebanner', 'Admin\EbannerController@ebanner')->name('admin.ebanner');
+    Route::get('/ebanner/add', 'Admin\EbannerController@add')->name('admin.ebanner.add');
+    Route::post('/ebanner/store', 'Admin\EbannerController@store')->name('admin.ebanner.store');
+    Route::post('/ebanner/delete/{id}/', 'Admin\EbannerController@delete')->name('admin.ebanner.delete');
+    Route::get('/ebanner/edit/{id}/', 'Admin\EbannerController@edit')->name('admin.ebanner.edit');
+    Route::post('/ebanner/update/{id}/', 'Admin\EbannerController@update')->name('admin.ebanner.update');
+
     // Currency  Route
     Route::get('/currency', 'Admin\CurrencyController@currency')->name('admin.currency');
     Route::get('/currency/add', 'Admin\CurrencyController@add')->name('admin.currency.add');
@@ -143,6 +153,22 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/shipping/method/edit/{id}/', 'Admin\ShippingController@edit')->name('admin.shipping.edit');
     Route::post('/shipping/method/update/{id}/', 'Admin\ShippingController@update')->name('admin.shipping.update');
     Route::get('/shipping/method/status/set/{id}', 'Admin\ShippingController@status')->name('admin.shipping.status');
+
+    // Message Section
+    Route::get('/messages', 'Admin\MessageController@message')->name('admin.message');
+    Route::get('/message/send/{id}', 'Admin\MessageController@send')->name('admin.message.send');
+    Route::post('/message/delete/{id}', 'Admin\MessageController@delete')->name('admin.message.delete');
+
+    // Newsletter Route
+    Route::get('/subscriber', 'Admin\NewsletterController@newsletter')->name('admin.newsletter');
+    Route::get('/mailsubscriber', 'Admin\NewsletterController@mailsubscriber')->name('admin.mailsubscriber');
+    Route::post('/subscribers/sendmail', 'Admin\NewsletterController@subscsendmail')->name('admin.subscribers.sendmail');
+
+    Route::get('/subscriber/add', 'Admin\NewsletterController@add')->name('admin.newsletter.add');
+    Route::post('/subscriber/store', 'Admin\NewsletterController@store')->name('admin.newsletter.store');
+    Route::post('/subscriber/delete/{id}/', 'Admin\NewsletterController@delete')->name('admin.newsletter.delete');
+    Route::get('/subscriber/edit/{id}/', 'Admin\NewsletterController@edit')->name('admin.newsletter.edit');
+    Route::post('/subscriber/update/{id}/', 'Admin\NewsletterController@update')->name('admin.newsletter.update');
 
     // Home Clients Section
     Route::get('/client', 'Admin\ClientController@client')->name('admin.client');
@@ -182,6 +208,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/category/get', 'Admin\ProductController@getcategory')->name('admin.helper.category');
     Route::get('/subcategory/get', 'Admin\ProductController@getsubcategory')->name('admin.helper.subcategory');
 
+    // Dynamic Page  Route
+    Route::get('/dynamic-page', 'Admin\DynamicpageController@dynamic_page')->name('admin.dynamic_page');
+    Route::get('/dynamic-page/add', 'Admin\DynamicpageController@add')->name('admin.dynamic_page.add');
+    Route::post('/dynamic-page/store', 'Admin\DynamicpageController@store')->name('admin.dynamic_page.store');
+    Route::post('/dynamic-page/delete/{id}/', 'Admin\DynamicpageController@delete')->name('admin.dynamic_page.delete');
+    Route::get('/dynamic-page/edit/{id}/', 'Admin\DynamicpageController@edit')->name('admin.dynamic_page.edit');
+    Route::post('/dynamic-page/update/{id}/', 'Admin\DynamicpageController@update')->name('admin.dynamic_page.update');
+
     // Language Routes
     Route::get('/languages', 'Admin\LanguageController@index')->name('admin.language.index');
     Route::get('/language/add', 'Admin\LanguageController@add')->name('admin.language.add');
@@ -198,4 +232,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     // Admin Footer Logo Text Routes
     Route::get('/footer', 'Admin\FooterController@index')->name('admin.footer.index');
     Route::post('/footer/update/{id}', 'Admin\FooterController@update')->name('admin.footer.update');
+});
+
+Route::group(['middleware' => 'setlang'], function () {
+
+    Route::get('/{slug}', 'Front\FrontController@front_dynamic_page')->name('front.front_dynamic_page');
+
 });

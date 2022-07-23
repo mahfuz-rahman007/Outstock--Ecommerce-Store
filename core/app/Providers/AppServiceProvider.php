@@ -6,6 +6,7 @@ use App\Admin;
 use App\Model\Social;
 use App\Model\Setting;
 use App\Model\Language;
+use App\Model\Dynamicpage;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -43,22 +44,22 @@ class AppServiceProvider extends ServiceProvider
                 $currentLang = Language::where('code', session()->get('lang'))->first();
 
                 $setting = Setting::where('language_id', $currentLang->id)->first();
-                // $front_dynamic_pages = Dynamicpage::where('status', 1)->where('language_id', $currentLang->id)->orderBy('id', 'DESC')->get();
+                $front_dynamic_pages = Dynamicpage::where('status', 1)->where('language_id', $currentLang->id)->orderBy('id', 'DESC')->get();
 
                 $view->with('setting', $setting);
 
                 $view->with('currentLang', $currentLang);
-                // $view->with('front_dynamic_pages', $front_dynamic_pages);
+                $view->with('front_dynamic_pages', $front_dynamic_pages);
             } else {
                 $currentLang = Language::where('is_default', 1)->first();
 
                 $setting = Setting::where('language_id', $currentLang->id)->first();
-                // $front_dynamic_pages = Dynamicpage::where('status', 1)->where('language_id', $currentLang->id)->orderBy('id', 'DESC')->get();
+                $front_dynamic_pages = Dynamicpage::where('status', 1)->where('language_id', $currentLang->id)->orderBy('id', 'DESC')->get();
 
                 $view->with('setting', $setting);
 
                 $view->with('currentLang', $currentLang);
-                // $view->with('front_dynamic_pages', $front_dynamic_pages);
+                $view->with('front_dynamic_pages', $front_dynamic_pages);
             }
 
 

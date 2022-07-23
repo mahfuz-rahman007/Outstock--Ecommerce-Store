@@ -13,7 +13,8 @@ use App\Http\Controllers\Controller;
 class NewsletterController extends Controller
 {
 
-    public function newsletter(Request $request){
+    public function newsletter(Request $request)
+    {
 
         $newsletters = Newsletter::orderBy('id', 'DESC')->get();
 
@@ -21,17 +22,18 @@ class NewsletterController extends Controller
     }
 
     // Add newsletter Category
-    public function add(){
+    public function add()
+    {
         return view('admin.newsletter.add');
     }
 
     // Store newsletter Category
-    public function store(Request $request){
-
-
+    public function store(Request $request)
+    {
         $request->validate([
             'newsletter' => [
                 'required',
+                'email',
                 'unique:newsletters,email',
                 'max:255'
             ],
@@ -48,16 +50,22 @@ class NewsletterController extends Controller
     }
 
     // newsletter Category Delete
-    public function delete($id){
+    public function delete($id)
+    {
 
         $newsletter = Newsletter::find($id);
         $newsletter->delete();
 
-        return back();
+        $notification = array(
+            'messege' => 'Newsletter Deleted successfully!',
+            'alert' => 'success'
+        );
+        return redirect(route('admin.newsletter'))->with('notification', $notification);
     }
 
     // newsletter Category Edit
-    public function edit($id){
+    public function edit($id)
+    {
 
         $newsletter = Newsletter::find($id);
         return view('admin.newsletter.edit', compact('newsletter'));
@@ -65,13 +73,14 @@ class NewsletterController extends Controller
     }
 
     // Update newsletter Category
-    public function update(Request $request, $id){
-
-
+    public function update(Request $request, $id)
+    {
 
          $request->validate([
             'email' => [
                 'required',
+                'email',
+                'unique:newsletters,email,'.$id,
                 'max:255'
             ],
         ]);
@@ -92,9 +101,10 @@ class NewsletterController extends Controller
     }
 
 
-    public function mailsubscriber() {
+    public function mailsubscriber()
+    {
         return view('admin.newsletter.mail');
-      }
+    }
 
       public function subscsendmail(Request $request) {
         $request->validate([
@@ -107,27 +117,27 @@ class NewsletterController extends Controller
 
         $subscs = Newsletter::all();
 
-        $be = Emailsetting::first();
+        $em = Emailsetting::first();
 
 
           $mail = new PHPMailer(true);
 
 
 
-          if ($be->is_smtp == 1) {
+          if ($em->is_smtp == 1) {
               try {
 
 
                   $mail->isSMTP();
-                  $mail->Host       = $be->smtp_host;
+                  $mail->Host       = $em->smtp_host;
                   $mail->SMTPAuth   = true;
-                  $mail->Username   = $be->smtp_user;
-                  $mail->Password   = $be->smtp_pass;
-                  $mail->SMTPSecure = $be->email_encryption;
-                  $mail->Port       = $be->smtp_port;
+                  $mail->Username   = $em->smtp_user;
+                  $mail->Password   = $em->smtp_pass;
+                  $mail->SMTPSecure = $em->email_encryption;
+                  $mail->Port       = $em->smtp_port;
 
                   //Recipients
-                  $mail->setFrom($be->from_email, $be->from_name);
+                  $mail->setFrom($em->from_email, $em->from_name);
 
                   foreach ($subscs as $key => $subsc) {
                       $mail->addAddress($subsc->email);
@@ -143,7 +153,7 @@ class NewsletterController extends Controller
               try {
 
                   //Recipients
-                  $mail->setFrom($be->from_email, $be->from_name);
+                  $mail->setFrom($em->from_email, $em->from_name);
                   foreach ($subscs as $key => $subsc) {
                       $mail->addAddress($subsc->email);     // Add a recipient
                   }

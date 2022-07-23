@@ -123,6 +123,16 @@ $lang_code = $currentLang->code;
                   <p>{{ __('Slider') }}</p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.ebanner') . '?language=' . $lang_code }}" class="nav-link
+                 @if(request()->path() == 'admin/ebanner') active
+                 @elseif(request()->path() == 'admin/ebanner/add') active
+                 @elseif(request()->is('admin/ebanner/edit/*')) active
+                 @endif">
+                  <i class="far fa-image-polaroid"></i>
+                  <p>{{ __('E-Banner') }}</p>
+                </a>
+            </li>
             <li class="nav-item has-treeview
                 @if(request()->path() == 'admin/currency') menu-open
                 @elseif(request()->path() == 'admin/payment/gateways') menu-open
@@ -284,7 +294,57 @@ $lang_code = $currentLang->code;
                 </ul>
             </li>
 
-          <li class="nav-item">
+            <li class="nav-item">
+                <a href="{{ route('admin.message')}}" class="nav-link
+                @if(request()->path() == 'admin/messages') active
+                @endif">
+                  <i class="nav-icon fas fa-envelope"></i>
+                  <p>
+                    {{ __('Messages') }}
+                  </p>
+                </a>
+            </li>
+
+        <li class="nav-item has-treeview
+            @if(request()->path() == 'admin/subscriber') menu-open
+            @elseif(request()->path() == 'admin/mailsubscriber') menu-open
+            @elseif(request()->path() == 'admin/subscriber/add') menu-open
+            @elseif(request()->is('admin/subscriber/edit/*')) menu-open
+            @endif">
+            <a href="#" class="nav-link
+                @if(request()->path() == 'admin/subscriber') active
+                @elseif(request()->path() == 'admin/subscriber/add') active
+                @elseif(request()->path() == 'admin/mailsubscriber') active
+                @elseif(request()->is('admin/subscriber/edit/*')) active
+                @endif">
+                <i class="nav-icon fas fa-envelope-open-text"></i>
+                <p>
+                    {{ __('Newsletters') }}
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.newsletter') }}" class="nav-link
+                    @if(request()->path() == 'admin/subscriber') active
+                    @elseif(request()->path() == 'admin/subscriber/add') active
+                    @elseif(request()->is('admin/subscriber/edit/*')) active
+                    @endif">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>{{ __('Subscribers') }}</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.mailsubscriber') }}"
+                    class="nav-link @if(request()->path() == 'admin/mailsubscriber') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>{{ __('Mail To Subscribers') }}</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+            <li class="nav-item">
             <a href="{{ route('admin.client')}}" class="nav-link
             @if(request()->path() == 'admin/client') active
             @elseif(request()->path() == 'admin/client/add') active
@@ -296,6 +356,18 @@ $lang_code = $currentLang->code;
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{{ route('admin.dynamic_page'). '?language=' . $lang_code }}"
+                class="nav-link @if(request()->path() == 'admin/dynamic-page') active @endif">
+
+                <i class="nav-icon  fab fa-sith"></i>
+                <p>
+                    {{ __('Dynamic Page') }}
+                </p>
+            </a>
+          </li>
+
           <li class="nav-item">
             <a href="{{ route('admin.language.index') }}" class="nav-link
             @if(request()->path() == 'admin/languages') active
@@ -309,6 +381,7 @@ $lang_code = $currentLang->code;
               </p>
             </a>
           </li>
+
           <li class="nav-item">
             <a href="{{ route('admin.footer.index') . '?language=' . $lang_code }}" class="nav-link @if(request()->path() == 'admin/footer') active @endif">
               <i class="nav-icon fas fa-feather-alt"></i>
@@ -317,6 +390,7 @@ $lang_code = $currentLang->code;
               </p>
             </a>
           </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

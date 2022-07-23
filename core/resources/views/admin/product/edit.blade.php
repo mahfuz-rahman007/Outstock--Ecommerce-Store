@@ -112,7 +112,7 @@
                                         <label for="current_price" class="col-sm-2 control-label">{{ __('Current Price') }} ($)<span class="text-danger">*</span></label>
 
                                         <div class="col-sm-10">
-                                            <input type="number" min="0" class="form-control" name="current_price" placeholder="{{ __('Current Price') }}" value="{{ Helper::showPrice($product->current_price) }}">
+                                            <input type="number"  step="any" class="form-control" name="current_price" placeholder="{{ __('Current Price') }}" value="{{ Helper::showPrice($product->current_price) }}">
                                             @if ($errors->has('current_price'))
                                                 <p class="text-danger"> {{ $errors->first('current_price') }} </p>
                                             @endif
@@ -125,7 +125,7 @@
                                         <label for="previous_price" class="col-sm-2 control-label">{{ __('Previous Price') }} ($)<span class="text-danger">*</span></label>
 
                                         <div class="col-sm-10">
-                                            <input type="number" min="0" class="form-control" name="previous_price" placeholder="{{ __('Previous Price') }}" value="{{ Helper::showPrice($product->previous_price) }}">
+                                            <input type="number"  step="any" class="form-control" name="previous_price" placeholder="{{ __('Previous Price') }}" value="{{ Helper::showPrice($product->previous_price) }}">
                                             @if ($errors->has('previous_price'))
                                                 <p class="text-danger"> {{ $errors->first('previous_price') }} </p>
                                             @endif

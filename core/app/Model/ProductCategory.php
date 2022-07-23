@@ -18,6 +18,10 @@ class ProductCategory extends Model
         return $this->hasMany('App\Model\Product','category_id');
     }
 
+    public function ebanners(){
+        return $this->hasMany('App\Model\Ebanner','pcategory_id');
+    }
+
 
 
 

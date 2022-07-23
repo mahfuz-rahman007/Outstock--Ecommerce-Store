@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Model\Language;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Model\Client;
-use App\Model\Emailsetting;
+use App\Model\Slider;
 use App\Model\Message;
 use App\Model\Product;
+use App\Model\Setting;
+use App\Model\Language;
+use App\Model\Dynamicpage;
+use App\Model\Emailsetting;
+use Illuminate\Http\Request;
 use App\Model\ProductCategory;
 use App\Model\ProductSubCategory;
-use App\Model\Setting;
-use App\Model\Slider;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Model\Ebanner;
 
 class FrontController extends Controller
 {
@@ -28,6 +30,8 @@ class FrontController extends Controller
 
 
         $data['sliders'] = Slider::where('status',1)->where('language_id', $currlang->id)->orderBy('serial_number', 'asc')->get();
+        $data['ebanners'] = Ebanner::where('status',1)->where('language_id', $currlang->id)->get();
+
 
         $data['popular_products'] = Product::with('productcategory')
                                             ->whereHas('productcategory', function($q){
@@ -44,11 +48,24 @@ class FrontController extends Controller
 
     }
 
+    // Change Language
+    public function changeLanguage($lang)
+    {
+
+        session()->put('lang', $lang);
+
+        app()->setLocale($lang);
+
+        return redirect()->route('front.index');
+    }
+
+    // Contact Page
     public function contact()
     {
         return view('front.contact');
     }
 
+    // Contact Mesage submit
     public function contactSubmit(Request $request)
     {
         $request->validate([
@@ -73,12 +90,20 @@ class FrontController extends Controller
         return redirect()->back()->with('notification', $notification);
     }
 
-    public function newsletter(Request $request)
-    {
-        $request->validate([
-            "email" => "required"
-        ]);
+    // Front Daynamic Page Function
+    public function front_dynamic_page($slug){
+        if (session()->has('lang')) {
+            $currlang = Language::where('code', session()->get('lang'))->first();
+        } else {
+            $currlang = Language::where('is_default', 1)->first();
+        }
+
+        $front_daynamic_page = Dynamicpage::where('slug', $slug)->where('language_id', $currlang->id)->firstOrFail();
+
+        return view('front.daynamicpage', compact('front_daynamic_page'));
     }
+
+
 
 
 }

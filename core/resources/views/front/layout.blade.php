@@ -198,10 +198,9 @@
                                                         <h5>Language</h5>
                                                     </div>
                                                     <ul>
-                                                        <li><a href="#">English</a></li>
-                                                        <li><a href="#">France</a></li>
-                                                        <li><a href="#">Germany</a></li>
-                                                        <li><a href="#">Bangla</a></li>
+                                                        @foreach ($langs as $lang)
+                                                        <li><a href="{{ route('changeLanguage',$lang->code) }}">{{ $lang->name }}</a></li>
+                                                        @endforeach
                                                     </ul>
                                                 </div>
                                             </li>
@@ -352,11 +351,9 @@
                             <div class="footer__widget-content">
                                 <div class="footer__links">
                                     <ul>
-                                        <li><a href="#">Shipping Policy</a></li>
-                                        <li><a href="#">Help & Contact Us</a></li>
-                                        <li><a href="#">Returns & Refunds</a></li>
-                                        <li><a href="#">Online Stores</a></li>
-                                        <li><a href="#">Terms & Conditions</a></li>
+                                        @foreach ($front_dynamic_pages as $page)
+                                            <li><a href="{{ route('front.front_dynamic_page', $page->slug) }}">{{ $page->title }}</a></li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>

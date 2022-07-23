@@ -120,40 +120,25 @@
     <div class="banner__area-2 pb-60">
         <div class="container-fluid p-0">
             <div class="row no-gutters">
-                <div class="col-xl-6 col-lg-6">
-                    <div class="banner__item-2 banner-right p-relative mb-30 pr-15">
-                        <div class="banner__thumb fix">
-                            <a href="product-details.html" class="w-img"><img
-                                    src="{{ asset('assets/front/img/shop/banner/banner-big-1.jpg') }}"
-                                    alt="banner"></a>
-                        </div>
-                        <div class="banner__content-2 p-absolute transition-3">
-                            <span>Products Essentials</span>
-                            <h4><a href="product-details.html">Bottle With Wooden Cork</a></h4>
-                            <p>Mirum est notare quam littera gothica, quam nunc putamus <br> parum claram,
-                                anteposuerit litterarum formas.</p>
-                            <a href="product-details.html" class="os-btn os-btn-2">buy now /
-                                <span>$59.25</span></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6">
-                    <div class=" banner__item-2 banner-left p-relative mb-30 pl-15">
-                        <div class="banner__thumb fix">
-                            <a href="product-details.html" class="w-img"><img
-                                    src="{{ asset('assets/front/img/shop/banner/banner-big-2.jpg') }}"
-                                    alt="banner"></a>
-                        </div>
-                        <div class="banner__content-2 banner__content-2-right p-absolute transition-3">
-                            <span>Products Furniture</span>
-                            <h4><a href="product-details.html">Hauteville Plywood Chair</a></h4>
-                            <p>Mirum est notare quam littera gothica, quam nunc putamus <br> parum claram,
-                                anteposuerit litterarum formas.</p>
-                            <a href="product-details.html" class="os-btn os-btn-2">buy now /
-                                <span>$396.99</span></a>
+
+                @foreach ($ebanners as $ebanner)
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="banner__item-2 banner-right p-relative mb-30 pr-15">
+                            <div class="banner__thumb fix">
+                                <a href="{{ route('front.products') }}" class="w-img"><img
+                                        src="{{ asset('assets/front/img/slider/'.$ebanner->image) }}"
+                                        alt="banner"></a>
+                            </div>
+                            <div class="banner__content-2 p-absolute transition-3">
+                                <span>{{ $ebanner->productcategory->name }}</span>
+                                <h4><a href="{{ route('front.products') }}">{{ $ebanner->title }}</a></h4>
+
+                                <a href="{{ route('front.products') }}" class="os-btn os-btn-2">{{ $ebanner->button_text }} /
+                                    <span>{{ Helper::showCurrencyPrice($ebanner->price) }}</span></a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
