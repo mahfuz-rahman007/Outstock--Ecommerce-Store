@@ -30,18 +30,19 @@ class FrontController extends Controller
 
 
         $data['sliders'] = Slider::where('status',1)->where('language_id', $currlang->id)->orderBy('serial_number', 'asc')->get();
-        $data['ebanners'] = Ebanner::where('status',1)->where('language_id', $currlang->id)->get();
+        $data['ebanners'] = Ebanner::where('status',1)->get();
 
 
         $data['popular_products'] = Product::with('productcategory')
                                             ->whereHas('productcategory', function($q){
                                                 $q->where('is_popular', 1);
-                                            })->where('language_id', $currlang->id)
-                                            ->orderBy('id','DESC')->limit(8)->get();
+                                            })->orderBy('id','DESC')->limit(8)->get();
 
-        $data['discount_products'] = Product::where('status', '1')->where('language_id', $currlang->id)->where('previous_price', '!=', '0')->get();
+        $data['discount_products'] = Product::where('status', '1')->where('previous_price', '!=', '0')->get();
 
         $data['clients'] =Client::where('status',1)->get();
+
+
 
 
        return view('front.index', $data);
@@ -58,6 +59,15 @@ class FrontController extends Controller
 
         return redirect()->route('front.index');
     }
+
+    // Chnage Currency
+        // Change Currency
+        public function changeCurrency($currency)
+        {
+            session()->put('currency', $currency);
+
+            return redirect()->back();
+        }
 
     // Contact Page
     public function contact()

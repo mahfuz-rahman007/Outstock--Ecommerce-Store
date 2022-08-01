@@ -63,22 +63,13 @@
                                 @endif
                                 {{ __('Order List') }}
                             </h3>
-                            <div class="card-tools d-flex">
-                                <form class="d-inline-block mr-3" action="{{ route('back.bulk.delete') }}" method="get">
-                                    <input type="hidden" value="" name="ids[]" id="bulk_delete">
-                                    <input type="hidden" value="order" name="table">
-                                    <button class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i>
-                                        {{ __('Bulk Delete') }}</button>
-                                </form>
-                            </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table class="table table-striped table-bordered data_table">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" data-target="order-bulk-delete" class="bulk_all_delete">
-                                        </th>
+
                                         <th scope="col">{{ __('Order Number') }}</th>
                                         <th scope="col" width="15%">{{ __('Gateway') }}</th>
                                         <th scope="col">{{ __('Total') }}</th>
@@ -89,11 +80,14 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($orders as $key => $order)
-                                        <tr id="order-bulk-delete">
-                                            <td><input type="checkbox" class="bulk-item" value="{{ $order->id }} "></td>
+                                        <tr>
                                             <td>#{{ $order->order_number }}</td>
                                             <td>{{ $order->method }}</td>
-                                            <td>{{ $order->currency_sign }}{{ round($order->total, 2) }}</td>
+                                            @php
+                                                $total = round($order->total, 2);
+                                                $total = number_format($total , 2);
+                                            @endphp
+                                            <td>{{ $order->currency_sign }} {{ $total }}</td>
                                             <td>
                                                 <form id="statusForm{{ $order->id }}" class="d-inline-block"
                                                     action="{{ route('admin.product.orders.status') }}" method="post">
@@ -101,14 +95,14 @@
                                                     <input type="hidden" name="order_id" value="{{ $order->id }}">
                                                     <select
                                                         class="form-control form-control-sm
-                                        @if ($order->order_status == '0') bg-warning
-                                        @elseif ($order->order_status == '1')
-                                          bg-primary
-                                        @elseif ($order->order_status == '2')
-                                          bg-success
-                                        @elseif ($order->order_status == '3')
-                                          bg-danger @endif
-                                        "
+                                                        @if ($order->order_status == '0') bg-warning
+                                                        @elseif ($order->order_status == '1')
+                                                        bg-primary
+                                                        @elseif ($order->order_status == '2')
+                                                        bg-success
+                                                        @elseif ($order->order_status == '3')
+                                                        bg-danger @endif
+                                                        "
                                                         name="order_status"
                                                         onchange="document.getElementById('statusForm{{ $order->id }}').submit();">
                                                         <option value="0"
@@ -133,10 +127,10 @@
                                                     <input type="hidden" name="order_id" value="{{ $order->id }}">
                                                     <select
                                                         class="form-control form-control-sm
-                                        @if ($order->payment_status == 1) bg-warning
-                                        @else 
-                                          bg-danger @endif
-                                        "
+                                                        @if ($order->payment_status == 1) bg-success
+                                                        @else
+                                                        bg-warning @endif
+                                                        "
                                                         name="payment_status"
                                                         onchange="document.getElementById('paymentStatusForm{{ $order->id }}').submit();">
                                                         <option value="0"
@@ -161,13 +155,13 @@
                                                         <a class="dropdown-item"
                                                             href="{{ asset('assets/front/invoices/product/' . $order->invoice_number) }}"
                                                             target="_blank">Invoice</a>
-                                                        <form id="deleteform" class="d-inline-block dropdown-item"
+                                                        <form id="deleteform" class="d-inline-block"
                                                             action="{{ route('admin.product.order.delete') }}"
                                                             method="post">
                                                             @csrf
                                                             <input type="hidden" name="order_id"
                                                                 value="{{ $order->id }}">
-                                                            <button type="submit" id="delete">
+                                                            <button type="submit" class="dropdown-item"  id="delete">
                                                                 {{ __('Delete') }}
                                                             </button>
                                                         </form>

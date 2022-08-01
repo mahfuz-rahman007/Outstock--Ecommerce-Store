@@ -62,7 +62,7 @@
                                         <label for="value" class="col-sm-2 control-label">{{ __('Value') }}<span class="text-danger">*</span></label>
 
                                         <div class="col-sm-10">
-                                            <input type="number" step="0.1" min="0" class="form-control" name="value" placeholder="{{ __('Value') }}" value="{{ $currency->value }}">
+                                            <input type="number" step="0.01" min="0" class="form-control" name="value" placeholder="{{ __('Value') }}" value="{{ $currency->value }}">
                                             @if ($errors->has('value'))
                                                 <p class="text-danger"> {{ $errors->first('value') }} </p>
                                             @endif

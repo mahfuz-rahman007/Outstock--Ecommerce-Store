@@ -1,5 +1,8 @@
 @extends('front.layout')
 
+@section('meta-keywords', "$setting->meta_keywords")
+@section('meta-description', "$setting->meta_description")
+
 @section('content')
     <main>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\User;
+use App\Model\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -12,17 +13,55 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function dashboard(){
-        return view('user.dashboard');
+
+    public function dashboard()
+    {
+
+        if(!Auth::user()){
+            return redirect(route('user.login'));
+        }
+
+        $data['orders'] = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+
+
+        return view('user.dashboard', $data);
+    }
+
+    public function product_order(){
+        if(!Auth::user()){
+            return redirect(route('user.login'));
+        }
+        $data['orders'] = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+
+        return view('user.product-details', $data);
+
+    }
+
+    public function orderDetails($id){
+        if(!Auth::user()){
+            return redirect(route('user.login'));
+        }
+
+        $data['order'] = Order::findOrFail($id);
+
+        return view('user.order-details', $data);
+
     }
 
     public function editProfile()
     {
+        if(!Auth::user()){
+            return redirect(route('user.login'));
+        }
+
         return view('user.edit-profile');
     }
 
     public function updateProfile(Request $request, $id)
     {
+        if(!Auth::user()){
+            return redirect(route('user.login'));
+        }
 
         $user = User::where('id', $id)->first();
         $request->validate([
@@ -69,11 +108,23 @@ class UserController extends Controller
 
     }
 
-    public function changePassword(){
+    public function changePassword()
+    {
+
+        if(!Auth::user()){
+            return redirect(route('user.login'));
+        }
+
         return view('user.change-password');
     }
 
-    public function updatePassword(Request $request, $id){
+    public function updatePassword(Request $request, $id)
+    {
+
+        if(!Auth::user()){
+            return redirect(route('user.login'));
+        }
+
         $user = User::where('id', $id)->first();
 
         $messages = [

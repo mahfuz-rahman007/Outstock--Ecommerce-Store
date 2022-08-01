@@ -5,8 +5,10 @@ namespace App\Providers;
 use App\Admin;
 use App\Model\Social;
 use App\Model\Setting;
+use App\Model\Currency;
 use App\Model\Language;
 use App\Model\Dynamicpage;
+use App\Model\Sectiontitle;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -45,9 +47,10 @@ class AppServiceProvider extends ServiceProvider
 
                 $setting = Setting::where('language_id', $currentLang->id)->first();
                 $front_dynamic_pages = Dynamicpage::where('status', 1)->where('language_id', $currentLang->id)->orderBy('id', 'DESC')->get();
+                $sectiontitle = Sectiontitle::where('language_id', $currentLang->id)->first();
 
                 $view->with('setting', $setting);
-
+                $view->with('sectiontitle', $sectiontitle);
                 $view->with('currentLang', $currentLang);
                 $view->with('front_dynamic_pages', $front_dynamic_pages);
             } else {
@@ -55,9 +58,10 @@ class AppServiceProvider extends ServiceProvider
 
                 $setting = Setting::where('language_id', $currentLang->id)->first();
                 $front_dynamic_pages = Dynamicpage::where('status', 1)->where('language_id', $currentLang->id)->orderBy('id', 'DESC')->get();
+                $sectiontitle = Sectiontitle::where('language_id', $currentLang->id)->first();
 
                 $view->with('setting', $setting);
-
+                $view->with('sectiontitle', $sectiontitle);
                 $view->with('currentLang', $currentLang);
                 $view->with('front_dynamic_pages', $front_dynamic_pages);
             }
@@ -65,7 +69,9 @@ class AppServiceProvider extends ServiceProvider
 
 
             $langs = Language::all();
+            $currencies = Currency::all();
             $view->with('langs', $langs);
+            $view->with('currencies', $currencies);
             $view->with('lang', $lang);
             $view->with('socials', $socials);
             $view->with('commonsetting', $commonsetting);

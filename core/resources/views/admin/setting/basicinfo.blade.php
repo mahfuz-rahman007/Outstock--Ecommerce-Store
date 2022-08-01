@@ -41,7 +41,6 @@
                     <div class="card-body">
                         <form class="form-horizontal" action="{{ route('admin.setting.updateBasicinfo', $basicinfo->language_id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
-
                             <div class="form-group row">
                                 <label for="website_title" class="col-sm-2 control-label">{{ __('Site Title') }} <span class="text-danger">*</span></label>
                                 <div class="col-sm-10">

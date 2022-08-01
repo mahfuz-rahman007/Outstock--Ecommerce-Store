@@ -18,17 +18,53 @@ Route::group(['middleware' => 'setlang'], function(){
 
     Route::get('/', 'Front\FrontController@index')->name('front.index');
 
+    // Language Change Route
     Route::get('/changelanguage/{lang}', 'Front\FrontController@changeLanguage')->name('changeLanguage');
+    // Currency Change Route
+    Route::get('/changecurrency/{currId}', 'Front\FrontController@changeCurrency')->name('changeCurrency');
 
-
+    // Shop Page & product details page
     Route::get('/shop','Front\ProductController@products')->name('front.products');
     Route::get('/product/product-details/{slug}','Front\ProductController@product_details')->name('front.product_details');
 
+    // product ratting & review comment
+    Route::post('/review/submit/{id}','Front\ProductReviewController@review')->name('front.product.review');
+    Route::get('cart/qty/get/ajax', 'Front\ProductController@cartQtyGet')->name('cart.qty.get'); // Product quantity
+    Route::get('/cart','Front\ProductController@cart')->name('front.cart'); // cart page route
+    Route::get('/cart/header/load/','Front\ProductController@headerCartLoad')->name('cart.header.load'); // header cart load
+    Route::get('/add-to-cart/{id}','Front\ProductController@addToCart')->name('front.product.add_cart'); // Add to cart
+    Route::get('/cart/item/remove/{id}', 'Front\ProductController@cartItemRemove')->name('cart.item.remove'); // Remove cart
+    Route::post('/cart/update/', 'Front\ProductController@cartUpdate')->name('cart.update'); // Update Cart
+
+
+    // wishlist
+    Route::get('/add-wishlist/{slug}','Front\ProductController@addWishlist')->name('front.product.add.wishlist'); // Add to wishlist
+    Route::get('/wishlist','Front\ProductController@wishlist')->name('front.wishlist'); // Add to wishlist
+    Route::get('/remove-wishlist/{slug}','Front\ProductController@removeWishlist')->name('front.product.remove.wishlist'); // Add to wishlist
+
+    // Checkout Routes
+    // checkout page
+    Route::get('/checkout','Front\ProductController@checkout')->name('front.checkout');
+    Route::get('/product/checkout/{slug}','Front\ProductController@productCheckout')->name('front.product.checkout');
+
+    // paypal routes
+    Route::post('/paypal/submit/', 'Payment\Product\PaypalController@submit')->name('product.paypal.submit');
+    Route::get('/product/order/paypal/cancle', 'Payment\Product\PaypalController@paycancle')->name('product.paypal.cancle');
+    Route::get('/product/paypal/return', 'Payment\Product\PaypalController@payreturn')->name('product.paypal.return');
+    Route::get('/product/paypal/notify', 'Payment\Product\PaypalController@notify')->name('product.paypal.notify');
+
+    // stripe routes
+    Route::post('/stripe/submit/', 'Payment\Product\StripeController@submit')->name('product.stripe.submit');
+
+    // cash on delivery routes
+    Route::post('/cash-on-delivery/submit/', 'Payment\Product\CashOnDeliveryController@submit')->name('product.cash_on_delivery.submit');
+
+    // Contact page & submit page Route
     Route::get('/contact','Front\FrontController@contact')->name('front.contact');
     Route::post('/contact/submit','Front\FrontController@contactSubmit')->name('front.contact.submit');
 
+    // Newsletter Route
     Route::post('/newsletter','Admin\NewsletterController@store')->name('front.newsletter.store');
-
 
     Route::group(['prefix'=> 'user'], function(){
 
@@ -50,6 +86,10 @@ Route::group(['middleware' => 'setlang'], function(){
 
         Route::get('/change-password', 'User\UserController@changePassword')->name('user.changePassword');
         Route::post('/update-password/{id}', 'User\UserController@updatePassword')->name('user.updatePassword');
+
+        // product order route
+        Route::get('/product-orders', 'User\UserController@product_order')->name('user.product.order');
+        Route::get('/order/details/{id}', 'User\UserController@orderDetails')->name('user.order.details');
 
         Route::get('/logout', 'User\UserController@logout')->name('user.logout');
 
@@ -93,6 +133,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/slinks/edit/{id}', 'Admin\SocialController@editSlinks')->name('admin.editSlinks');
     Route::post('/slinks/update/{id}', 'Admin\SocialController@updateSlinks')->name('admin.updateSlinks');
     Route::post('/slinks/delete/{id}', 'Admin\SocialController@deleteSlinks')->name('admin.deleteSlinks');
+
+    //Section Title
+    Route::get('/sectiontitle' , 'Admin\SettingController@sectiontitle')->name('admin.sectiontitle');
+    Route::post('/sectiontitle/update/{id}' , 'Admin\SettingController@updateSectiontitle')->name('admin.updateSectiontitle');
+
 
     // Seo Info Routes
     Route::get('/seoinfo', 'Admin\SettingController@seoinfo')->name('admin.seoinfo');
@@ -207,6 +252,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
     Route::get('/category/get', 'Admin\ProductController@getcategory')->name('admin.helper.category');
     Route::get('/subcategory/get', 'Admin\ProductController@getsubcategory')->name('admin.helper.subcategory');
+
+    // Product Order Routes
+    Route::get('/product/all/orders', 'Admin\ProductOrderController@all')->name('admin.all.product.orders');
+    Route::get('/product/pending/orders', 'Admin\ProductOrderController@pending')->name('admin.pending.product.orders');
+    Route::get('/product/processing/orders', 'Admin\ProductOrderController@processing')->name('admin.processing.product.orders');
+    Route::get('/product/completed/orders', 'Admin\ProductOrderController@completed')->name('admin.completed.product.orders');
+    Route::get('/product/rejected/orders', 'Admin\ProductOrderController@rejected')->name('admin.rejected.product.orders');
+
+    Route::post('/product/orders/status', 'Admin\ProductOrderController@status')->name('admin.product.orders.status');
+    Route::post('/product/orders/payment/status', 'Admin\ProductOrderController@payment_status')->name('admin.product.payment.status');
+    Route::get('/product/orders/detais/{id}', 'Admin\ProductOrderController@details')->name('admin.product.details');
+    Route::post('/product/order/delete', 'Admin\ProductOrderController@orderDelete')->name('admin.product.order.delete');
 
     // Dynamic Page  Route
     Route::get('/dynamic-page', 'Admin\DynamicpageController@dynamic_page')->name('admin.dynamic_page');

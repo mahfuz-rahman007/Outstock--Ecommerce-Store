@@ -21,7 +21,7 @@
             @if (request()->path() == 'user/product-orders') active
             @elseif(request()->is('user/product-order/*')) active
             @endif"
-                    href=""> {{ __('Product Order') }} </a>
+                    href="{{ route('user.product.order') }}"> {{ __('Product Order') }} </a>
             </li>
         @endif
         <li>

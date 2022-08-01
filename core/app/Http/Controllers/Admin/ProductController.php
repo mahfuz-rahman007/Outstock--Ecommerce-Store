@@ -71,8 +71,6 @@ class ProductController extends Controller
         }
 
 
-
-
         $product->stock = $request->stock;
         $product->language_id = $request->language_id;
         $product->title = $request->title;
@@ -81,8 +79,8 @@ class ProductController extends Controller
         $product->subcategory_id = $request->subcategory_id;
         $product->description = $request->description;
         $product->short_description = $request->short_description;
-        $product->current_price = Helper::storePrice($request->current_price);
-        $product->previous_price = Helper::storePrice($request->previous_price);
+        $product->current_price = $request->current_price;
+        $product->previous_price = $request->previous_price;
         $product->status = $request->status;
         $product->meta_tags = $request->meta_tags;
         $product->meta_description = $request->meta_description;
@@ -160,8 +158,8 @@ class ProductController extends Controller
         $product->subcategory_id = $request->subcategory_id;
         $product->description = $request->description;
         $product->short_description = $request->short_description;
-        $product->current_price = Helper::storePrice($request->current_price);
-        $product->previous_price = Helper::storePrice($request->previous_price);
+        $product->current_price = $request->current_price;
+        $product->previous_price = $request->previous_price;
         $product->status = $request->status;
         $product->meta_tags = $request->meta_tags;
         $product->meta_description = $request->meta_description;

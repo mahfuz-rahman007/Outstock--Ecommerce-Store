@@ -31,13 +31,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="
-            @if($order->shipping_name && $order->shipping_email && $order->shipping_number &&  $order->shipping_address)
-                col-md-4
-                @else
-                col-md-6 
-            @endif
-            ">
+            <div class="col-md-6">
                 <div class="card card-primary card-outline">
                         <div class="card-header">
                             <h3 class="card-title mt-1">{{ __('Order') }}  [ {{ $order->order_number}} ]</h3>
@@ -49,7 +43,7 @@
                                     <th>{{__('Payment Status')}} :</th>
                                     <td>
                                         @if($order->payment_status =='0')
-                                        <span class="badge badge-danger">Pending </span>
+                                        <span class="badge badge-warning">Pending </span>
                                         @else
                                         <span class="badge badge-success">Completed  </span>
                                         @endif
@@ -71,14 +65,18 @@
                                 </tr>
                                 <tr>
                                     <th>{{__('Paid amount')}} :</th>
-                                    <td>{{$order->currency_sign}} {{$order->total}}</td>
+                                    @php
+                                        $total = round($order->total, 2);
+                                        $total = number_format($total , 2);
+                                    @endphp
+                                    <td>{{$order->currency_sign}} {{ $total }}</td>
                                 </tr>
                                 <tr>
                                     <th>{{__('Shipping Info')}} :</th>
                                     <td>
                                         <strong>Title :</strong> {{ $shipping_charge_info['title'] }} <br>
                                         <strong>Duration :</strong> {{ $shipping_charge_info['subtitle'] }} <br>
-                                        <strong>Cost :</strong> {{$order->currency_sign}}{{ $shipping_charge_info['cost'] }} <br>
+                                        <strong>Cost :</strong> {{$order->currency_sign}} {{ Helper::showPrice($shipping_charge_info['cost']) }} <br>
                                     </td>
                                 </tr>
                                 <tr>
@@ -93,81 +91,7 @@
                     </div>
                 </div>
             </div>
-            @if($order->shipping_name && $order->shipping_email && $order->shipping_number &&  $order->shipping_address)
-            <div class="col-md-4">
-                <div class="card card-primary card-outline">
-                        <div class="card-header">
-                            <h3 class="card-title mt-1">{{ __('Billing Details') }}</h3>
-                        </div>
-
-                        <div class="card-body">
-                            <table class="table  table-bordered">
-                                <tr>
-                                    <th>{{__('Email')}} :</th>
-                                    <td>{{Helper::convertUtf8($order->billing_email)}}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('Phone')}} :</th>
-                                    <td> {{$order->billing_number}}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('State')}} :</th>
-                                    <td>{{Helper::convertUtf8($order->billing_state)}}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('Address')}} :</th>
-                                    <td>{{Helper::convertUtf8($order->billing_address)}}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('Country')}} :</th>
-                                    <td>{{Helper::convertUtf8($order->billing_country)}}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('Zip Code')}} :</th>
-                                    <td>{{Helper::convertUtf8($order->billing_zip)}}</td>
-                                </tr>
-                            </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-primary card-outline">
-                        <div class="card-header">
-                            <h3 class="card-title mt-1">{{ __('Shipping Details') }}</h3>
-                        </div>
-
-                        <div class="card-body">
-                            <table class="table  table-bordered">
-                                <tr>
-                                    <th>{{__('Email')}} :</th>
-                                    <td>{{Helper::convertUtf8($order->shipping_email)}}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('Phone')}} :</th>
-                                    <td> {{$order->shipping_number}}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('State')}} :</th>
-                                    <td>{{Helper::convertUtf8($order->shipping_state)}}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('Address')}} :</th>
-                                    <td>{{Helper::convertUtf8($order->shipping_address)}}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('Country')}} :</th>
-                                    <td>{{Helper::convertUtf8($order->shipping_country)}}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('Zip Code')}} :</th>
-                                    <td>{{Helper::convertUtf8($order->shipping_zip)}}</td>
-                                </tr>
-                            </table>
-                    </div>
-                </div>
-            </div>
-            @else 
-                <div class="col-md-6">
+            <div class="col-md-6">
                     <div class="card card-primary card-outline">
                             <div class="card-header">
                                 <h3 class="card-title mt-1">{{ __('Billing Details') }}</h3>
@@ -202,8 +126,7 @@
                                 </table>
                         </div>
                     </div>
-                </div>
-            @endif
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -213,44 +136,33 @@
                         </div>
 
                         <div class="card-body">
-                            
+
                             <table class="table  table-bordered table-striped data_table">
                                 <thead>
                                     <tr>
                                        <th>#</th>
                                        <th>{{__('Image')}}</th>
                                        <th>{{__('Product')}}</th>
-                                       <th>{{__('Downloadable')}}</th>
                                        <th>{{__('Quintity')}}</th>
                                        <th>{{__('Price')}}</th>
                                        <th>{{__('Total')}}</th>
                                     </tr>
                                  </thead>
                                  <tbody>
-                                   
+
                                     @foreach ($cart as $key => $item)
                                     <tr>
                                        <td>{{$key+1}}</td>
                                        <td>
-                                           <img class="w-80" src="{{asset('assets/front/img/'.$item['image'])}}" alt="product" >
+                                           <img width="80" src="{{asset('assets/front/img/'.$item['image'])}}" alt="product" >
                                     </td>
                                        <td>{{Helper::convertUtf8($item['title'])}}</td>
                                        <td>
-                                           @if ($item['downloadable_file'])
-                                           <a class="btn btn-success btn-sm" href="{{asset('assets/front/downloadable/'.$item['downloadable_file']) }}">Download File</a>
-                                           @else 
-                                           No File Available
-                                           @endif
-                                        
-                                           {{-- {{ $op = App\Models\Product::findOrFail($item['id']) }}
-                                           {{ $op }} --}}
-                                       </td>
-                                       <td>
                                           <b>{{__('Quantity')}}:</b> <span>{{$item['qty']}}</span><br>
                                        </td>
-                                       <td>{{$order->currency_sign}} {{  Helper::showPriceInOrder($item['price'], $order->currency_value) }}</td>
+                                       <td><span>{{ $order->currency_sign }} {{  Helper::showPrice($item['price']) }} </span></td>
 
-                                       <td>{{$order->currency_sign}} {{round( ($item['price'] * $item['qty'])  * $order->currency_value,2) }}</td>
+                                       <td><span>{{ $order->currency_sign }} {{  Helper::showPrice($item['price'] * $item['qty'])  }} </span></td>
                                     </tr>
                                     @endforeach
                                  </tbody>

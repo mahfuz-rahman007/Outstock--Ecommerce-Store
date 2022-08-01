@@ -3,14 +3,18 @@
 namespace App\Helpers;
 
 use App\Model\Currency;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 
 class Helper{
 
 
-    public static function showCurrencyPrice($price) {
+    public static function convertUtf8($value){
+        return mb_detect_encoding($value, mb_detect_order(), true) === 'UTF-8' ? $value : mb_convert_encoding($value, 'UTF-8');
+    }
 
+    public static function showCurrencyPrice($price) {
 
         if (Session::has('currency')){
             $curr = Currency::where('id', session()->get('currency'))->first();
@@ -22,9 +26,9 @@ class Helper{
 
         $price = round($price * $curr->value, 2);
 
+        $price = number_format($price , 2);
 
-        return $curr->sign.$price;
-
+        return $curr->sign.' '.$price;
 
     }
 
@@ -37,7 +41,10 @@ class Helper{
         {
             $curr = Currency::where('is_default', 1)->first();
         }
+
         $price = round($price * $curr->value,2);
+        $price = number_format($price , 2);
+
         return $curr->sign.$price;
     }
 
@@ -50,8 +57,11 @@ class Helper{
         {
             $curr = Currency::where('is_default', 1)->first();
         }
-        $price = ($price / $curr->value);
+
+        $price = round($price * $curr->value , 2);
+
         return $price;
+
     }
 
 
@@ -102,9 +112,11 @@ class Helper{
             $curr = Currency::where('is_default', 1)->first();
         }
 
-        $price = $price * $curr->value;
+        $price = round( $price * $curr->value , 2);
 
-        return round($price,2);
+        $price = number_format($price, 2);
+
+        return $price;
 
     }
 
@@ -160,6 +172,27 @@ class Helper{
     }
 
 
+    public static function isWishlist($id){
+
+        $user_id = Auth::user()->id;
+
+        if(Session::has('wishlist')){
+            if( array_key_exists($user_id, Session::get('wishlist')) ){
+
+                if( array_key_exists($id, Session::get('wishlist')[$user_id] ) ){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else {
+            return false;
+        }
+
+
+    }
 
 
 

@@ -15,7 +15,8 @@ $lang_code = $currentLang->code;
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item">
+
+            <li class="nav-item">
               <a href="{{ route('admin.dashboard') }}" class="nav-link @if(request()->path() == 'admin/dashboard') active @endif">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
@@ -23,6 +24,7 @@ $lang_code = $currentLang->code;
                 </p>
               </a>
             </li>
+
             <li class="nav-item has-treeview
               @if(request()->path() == 'admin/basicinfo') menu-open
               @elseif(request()->path() == 'admin/email-config') menu-open
@@ -31,6 +33,8 @@ $lang_code = $currentLang->code;
               @elseif(request()->path() == 'admin/scripts') menu-open
               @elseif(request()->path() == 'admin/page-visibility') menu-open
               @elseif (request()->path() == 'admin/cookie-alert') menu-open
+              @elseif (request()->path() == 'admin/custom-css') menu-open
+
               @elseif(request()->path() == 'admin/slinks') menu-open
               @elseif(request()->is('admin/slinks/edit/*')) menu-open
               @endif">
@@ -41,6 +45,7 @@ $lang_code = $currentLang->code;
                 @elseif(request()->path() == 'admin/seoinfo') active
                 @elseif(request()->path() == 'admin/scripts') active
                 @elseif (request()->path() == 'admin/cookie-alert') active
+                @elseif (request()->path() == 'admin/custom-css') active
                 @elseif(request()->path() == 'admin/page-visibility') active
 
                 @elseif(request()->path() == 'admin/slinks') active
@@ -76,6 +81,12 @@ $lang_code = $currentLang->code;
                         <p>{{ __('Social Links') }}</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.sectiontitle') . '?language=' . $lang_code }}" class="nav-link @if(request()->path() == 'admin/sectiontitle') active @endif">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>{{ __('Section Title') }}</p>
+                    </a>
+                  </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.seoinfo') . '?language=' . $lang_code }} "
                         class="nav-link @if (request()->path() == 'admin/seoinfo') active @endif">
@@ -113,6 +124,7 @@ $lang_code = $currentLang->code;
                 </li>
               </ul>
             </li>
+
             <li class="nav-item">
                 <a href="{{ route('admin.slider') . '?language=' . $lang_code }}" class="nav-link
                  @if(request()->path() == 'admin/slider') active
@@ -123,6 +135,7 @@ $lang_code = $currentLang->code;
                   <p>{{ __('Slider') }}</p>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a href="{{ route('admin.ebanner') . '?language=' . $lang_code }}" class="nav-link
                  @if(request()->path() == 'admin/ebanner') active
@@ -133,6 +146,7 @@ $lang_code = $currentLang->code;
                   <p>{{ __('E-Banner') }}</p>
                 </a>
             </li>
+
             <li class="nav-item has-treeview
                 @if(request()->path() == 'admin/currency') menu-open
                 @elseif(request()->path() == 'admin/payment/gateways') menu-open
@@ -192,6 +206,7 @@ $lang_code = $currentLang->code;
                     </li>
                 </ul>
             </li>
+
             <li class="nav-item has-treeview
                 @if(request()->path() == 'admin/product') menu-open
                 @elseif(request()->path() == 'admin/product/product-category') menu-open
@@ -254,21 +269,21 @@ $lang_code = $currentLang->code;
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href=" "
+                        <a href="{{ route('admin.all.product.orders') }}"
                         class="nav-link @if(request()->path() == 'admin/product/all/orders') active @endif">
                             <i class="far fa-circle nav-icon"></i>
                             <p>{{ __('All Order') }}</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href=" "
+                        <a href="{{ route('admin.pending.product.orders') }}"
                         class="nav-link @if(request()->path() == 'admin/product/pending/orders') active @endif">
                             <i class="far fa-circle nav-icon"></i>
                             <p>{{ __('Pending Order') }}</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href=" " class="nav-link
+                        <a href="{{ route('admin.processing.product.orders') }}" class="nav-link
                             @if(request()->path() == 'admin/product/processing/orders') active
                             @endif">
                             <i class="far fa-circle nav-icon"></i>
@@ -276,7 +291,7 @@ $lang_code = $currentLang->code;
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href=" " class="nav-link
+                        <a href="{{ route('admin.completed.product.orders') }} " class="nav-link
                             @if(request()->path() == 'admin/product/completed/orders') active
                             @endif">
                             <i class="far fa-circle nav-icon"></i>
@@ -284,7 +299,7 @@ $lang_code = $currentLang->code;
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href=" " class="nav-link
+                        <a href=" {{ route('admin.rejected.product.orders') }}" class="nav-link
                             @if(request()->path() == 'admin/product/rejected/orders') active
                             @endif">
                             <i class="far fa-circle nav-icon"></i>

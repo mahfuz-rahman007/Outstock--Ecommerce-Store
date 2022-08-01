@@ -1,5 +1,8 @@
 @extends('front.layout')
 
+@section('meta-keywords', "$setting->meta_keywords")
+@section('meta-description', "$setting->meta_description")
+
 @section('content')
     <main>
 
@@ -39,8 +42,7 @@
 				@includeif('user.side-dashboard')
 			</div>
 			<div class="col-lg-9 ">
-			  {{-- <div class="dashboard-inner">
-				@if( $visibility->is_shop == 1)
+			  <div class="dashboard-inner">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="card">
@@ -73,8 +75,11 @@
 
 										  <td>{{$order->order_number}}</td>
 											<td>
-
-												{{$order->currency_sign}} {{$order->total}}
+                                                @php
+                                                    $total = round($order->total, 2);
+                                                    $total = number_format($total , 2);
+                                                @endphp
+												{{$order->currency_sign}} {{$total}}
 											</td>
 											<td>
 											   {{ $order->qty }}
@@ -91,7 +96,7 @@
 
 
 											<td>
-												<button type="button" data-href="{{ route('user.order.details', $order->id) }}"  class="btn btn-primary view_order_details btn-sm" data-toggle="modal" data-target="#view_order_details_modal">
+												<button type="button"  data-href="{{ route('user.order.details', $order->id) }}" class="btn btn-primary view_order_details btn-sm" data-toggle="modal" data-target="#view_order_details_modal">
 												{{ __('Details') }}
 												  </button>
 											</td>
@@ -104,8 +109,7 @@
 						</div>
 					</div>
 				</div>
-				@endif
-			  </div> --}}
+			  </div>
 			</div>
 		  </div>
 		</div>
@@ -114,5 +118,29 @@
     <!-- User Dashboard End -->
 
     </main>
+
+    <div class="modal fade" id="view_order_details_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">{{ __('View Order Details') }}</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12" id="order_info_view">
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">{{ __('Close') }}</button>
+			</div>
+		  </div>
+		</div>
+	</div>
+
 @endsection
 

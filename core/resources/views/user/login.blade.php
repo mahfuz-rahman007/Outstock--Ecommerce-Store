@@ -1,5 +1,8 @@
 @extends('front.layout')
 
+@section('meta-keywords', "$setting->meta_keywords")
+@section('meta-description', "$setting->meta_description")
+
 @section('content')
     <main>
 
@@ -48,9 +51,9 @@
                                     @endif
                                     <form action="{{ route('user.login.submit') }}" method="POST">
                                         @csrf
-                                        <label for="name">Email Address <span>**</span></label>
+                                        <label for="name">{{ __('Email') }} {{ __('Address') }} <span>**</span></label>
                                         <input id="name" type="email" name="email" placeholder="Email address..." />
-                                        <label for="pass">Password <span>**</span></label>
+                                        <label for="pass">{{ __('Password') }} <span>**</span></label>
                                         <input id="pass" type="password" name="password" placeholder="Enter password..." />
                                         <div class="login-action mb-20 fix">
                                             <span class="forgot-login f-right">
@@ -69,9 +72,9 @@
                                                 @endif
                                             </div>
                                         @endif
-                                        <button class="os-btn w-100" type="submit">Login Now</button>
+                                        <button class="os-btn w-100" type="submit">{{ __('Login') }}</button>
                                         <div class="or-divide"><span>or</span></div>
-                                        <a href="{{ route('user.register') }}" class="os-btn os-btn-black w-100">Register Now</a>
+                                        <a href="{{ route('user.register') }}" class="os-btn os-btn-black w-100">{{ __('Register Now') }}</a>
                                     </form>
                                 </div>
                             </div>

@@ -15,5 +15,6 @@ class Language extends Model
     public function sectiontitle() {
         return $this->hasOne('App\Model\Sectiontitle');
     }
+    
 
 }

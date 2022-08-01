@@ -101,7 +101,7 @@ class RegisterController extends Controller
 
                     $mail->send();
 
-                    return redirect(route('user.login'))->with('success', __('We need to verify your email address. We have sent an email to'). ' '.$request->email. ' '  .__('to verify your email address. Please click link in that email to continue.'));
+                    return redirect(route('user.login'))->with('success', __('We need to verify your email address for safekeeping your account. We have sent an email to'). ' '.$request->email. ' '  .__('to verify your email address. Please click link in that email to continue. Or you can login now'));
 
 
                 } catch (Exception $e){

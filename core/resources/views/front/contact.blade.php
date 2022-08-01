@@ -1,4 +1,8 @@
+@if ($commonsetting->is_contact_page == 1)
 @extends('front.layout')
+
+@section('meta-keywords', "$setting->meta_keywords")
+@section('meta-description', "$setting->meta_description")
 
 @section('content')
     <main>
@@ -38,14 +42,14 @@
                     <div class="row">
                         <div class="col-xl-6 col-lg-6">
                             <div class="contact__info">
-                                <h3>Find us here.</h3>
+                                <h3>{{ __('Find us here.') }}</h3>
                                 <ul class="mb-55">
                                     <li class="d-flex mb-35">
                                         <div class="contact__info-icon mr-20">
                                             <i class="fal fa-map-marker-alt"></i>
                                         </div>
                                         <div class="contact__info-content">
-                                            <h6>Address:</h6>
+                                            <h6>{{ __('Address') }}:</h6>
                                             <span>{{ $commonsetting->address }}</span>
                                         </div>
                                     </li>
@@ -54,7 +58,7 @@
                                             <i class="fal fa-envelope-open-text"></i>
                                         </div>
                                         <div class="contact__info-content">
-                                            <h6>Email:</h6>
+                                            <h6>{{ __('Email') }}:</h6>
                                             @php
                                                 $email = explode( ',', $commonsetting->email );
                                                 for ($i=0; $i < count($email); $i++) {
@@ -68,7 +72,7 @@
                                             <i class="fal fa-phone-alt"></i>
                                         </div>
                                         <div class="contact__info-content">
-                                            <h6>Number Phone:</h6>
+                                            <h6>{{ __('Phone') }}:</h6>
                                             @php
                                                 $number = explode( ',', $commonsetting->number );
                                                 for ($i=0; $i < count($number); $i++) {
@@ -79,7 +83,10 @@
                                     </li>
                                 </ul>
 
-                                <div class="contact__social">
+                                <h3>{{ __('Connect with us on social media :') }}</h3>
+
+
+                                <div class="contact__social mt-4">
                                     <ul>
                                         @foreach ($socials as $social)
                                             <li><a href="{{ $social->url }}"  target="_blank"><i class="fab {{ $social->icon }}"></i></a></li>
@@ -90,7 +97,7 @@
                         </div>
                         <div class="col-xl-6 col-lg-6">
                             <div class="contact__form">
-                                <h3>Contact Us.</h3>
+                                <h3>{{ __('Contact Us.') }}</h3>
                                 <form action="{{ route('front.contact.submit') }}" method="POST">
                                     @csrf
                                     <div class="row">
@@ -171,8 +178,8 @@
                         <div class="row">
                             <div class="col-xl-8 offset-xl-2">
                                 <div class="subscribe__content text-center">
-                                    <h2>Get Discount Info</h2>
-                                    <p>Subscribe to the Outstock mailing list to receive updates on new arrivals, special offers and other discount information.</p>
+                                    <h2>{{ $sectiontitle->newsletter_title }}</h2>
+                                    <p>{{ $sectiontitle->newsletter_sub_title }}</p>
                                     <div class="subscribe__form">
                                         <form action="{{ route('front.newsletter.store') }}" method="POST">
                                             @csrf
@@ -189,4 +196,7 @@
             <!-- subscribe area end -->
     </main>
 @endsection
+@endif
+
+
 

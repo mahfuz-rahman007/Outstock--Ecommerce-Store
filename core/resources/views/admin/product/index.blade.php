@@ -66,7 +66,7 @@
                                     {{$product->title}}
                                 </td>
                                 <td>
-                                    {{ Helper::showAdminCurrencyPrice($product->current_price) }}
+                                    {{ Helper::showCurrencyPrice($product->current_price) }}
                                 </td>
 
                                 <td>

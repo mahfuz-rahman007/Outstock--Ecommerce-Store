@@ -34,7 +34,7 @@
                                 <div class="card-body">
 
                                         <div class="form-group row">
-                                            <label for="" class="col-sm-5 control-label">{{ __('Home Section') }}<span
+                                            <label for="" class="col-sm-5 control-label">{{ __('Hero Section') }}<span
                                             class="text-danger">*</span></label>
                                             <div class="col-sm-7">
                                                 <input type="checkbox" {{ $commonsetting->is_hero_section == '1' ? 'checked':'' }} name="is_hero_section" data-size="large"  data-bootstrap-switch data-off-color="danger" data-on-color="success" data-on-text="Visible" data-label-text="<i class='fas fa-mouse'></i>"  data-off-text="Invisible" >
@@ -51,6 +51,17 @@
                                                 <input type="checkbox" {{ $commonsetting->is_trending_section == '1' ? 'checked':'' }} name="is_trending_section" data-size="large"  data-bootstrap-switch data-off-color="danger" data-on-color="success" data-on-text="Visible" data-label-text="<i class='fas fa-mouse'></i>"  data-off-text="Invisible" >
                                                 @if ($errors->has('is_trending_section'))
                                                 <p class="text-danger"> {{ $errors->first('is_trending_section') }} </p>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-5 control-label">{{ __('E-Banner Section') }}<span
+                                            class="text-danger">*</span></label>
+                                            <div class="col-sm-7">
+                                                <input type="checkbox" {{ $commonsetting->is_ebanner_section == '1' ? 'checked':'' }} name="is_ebanner_section" data-size="large"  data-bootstrap-switch data-off-color="danger" data-on-color="success" data-on-text="Visible" data-label-text="<i class='fas fa-mouse'></i>"  data-off-text="Invisible" >
+                                                @if ($errors->has('is_ebanner_section'))
+                                                <p class="text-danger"> {{ $errors->first('is_ebanner_section') }} </p>
                                                 @endif
                                             </div>
                                         </div>

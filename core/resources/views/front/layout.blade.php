@@ -1,3 +1,24 @@
+@php
+    if(auth()->user()){
+
+        $user_id = auth()->user()->id;
+
+        if(Session::has('cart')){
+            if( array_key_exists($user_id, Session::get('cart')) ){
+                $cart = Session::get('cart')[$user_id];
+
+            }else{
+                $cart = [];
+            }
+        }else {
+            $cart = [];
+        }
+
+
+    }
+
+@endphp
+
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -6,9 +27,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{ $setting->website_title }} </title>
-    <meta name="description" content="">
+    <meta name="description" content="@yield('meta-description')">
+	<meta name="keywords" content="@yield('meta-keywords')">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+    <title>{{ $setting->website_title }} </title>
 
     <!-- Place favicon.ico in the root directory -->
     <link rel="shortcut icon" type="image/x-icon" href=" {{ asset('assets/front/img/'.$commonsetting->fav_icon) }}">
@@ -25,15 +50,25 @@
     <link rel="stylesheet" href="{{ asset('assets/front/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/front/css/default.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/front/css/ui-range-slider.css') }}">
+    @yield('styles')
      <!-- Sweetalert2 css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <!-- DataTable css -->
+    <link rel="stylesheet" href="{{ asset('assets/admin/plugins/data-table/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/plugins/data-table/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/plugins/data-table/buttons.bootstrap4.min.css') }}">
+
     <link rel="stylesheet" href="{{ asset('assets/front/css/style.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/front/') }}/css/dynamic-css.css">
+
+    <link rel="stylesheet" href="{{ asset('assets/front/') }}/css/dynamic-css.php?color={{ $commonsetting->base_color }}">
+
 </head>
 
 <body {{ Session::has('notification') ? 'data-notification' : '' }} @if(Session::has('notification')) data-notification-message='{{ json_encode(Session::get('notification')) }} @endif'>
 
     <!-- Add your site or application content here -->
-
     <!-- prealoder area start -->
     <div id="loading">
         <div id="loading-center">
@@ -53,7 +88,7 @@
                 <div class="row align-items-center">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">
                         <div class="logo">
-                            <a href="index.html"><img src="{{ asset('assets/front/img/'.$commonsetting->header_logo) }}"
+                            <a href="{{ route('front.index') }}"><img src="{{ asset('assets/front/img/'.$commonsetting->header_logo) }}"
                                     alt="logo"></a>
                         </div>
                     </div>
@@ -63,14 +98,20 @@
                                 <nav>
                                     <ul>
                                         <li class="active">
-                                            <a href="{{ route('front.index') }}">Home</a>
+                                            <a href="{{ route('front.index') }}">{{ __('Home') }}</a>
                                         </li>
+                                        @if ($commonsetting->is_shop_page == 1)
                                         <li class="mega-menu">
-                                            <a href="{{ route('front.products') }}">Shop</a>
+                                            <a href="{{ route('front.products') }}">{{ __('Shop') }}</a>
                                         </li>
+                                        @endif
+
+                                        @if ($commonsetting->is_contact_page == 1)
                                         <li>
-                                            <a href="{{ route('front.contact') }}">Contact</a>
+                                            <a href="{{ route('front.contact') }}">{{ __('Contact') }}</a>
                                         </li>
+                                        @endif
+
                                     </ul>
                                 </nav>
                             </div>
@@ -80,91 +121,29 @@
                             <div class="header__action">
                                 <ul>
                                     <li><a href="#" class="search-toggle"><i class="ion-ios-search-strong"></i>
-                                            Search</a></li>
-                                    <li><a href="javascript:void(0);" class="cart"><i class="ion-bag"></i> Cart
-                                            <span>(01)</span></a>
-                                        <div class="mini-cart">
-                                            <div class="mini-cart-inner">
-                                                <ul class="mini-cart-list">
-                                                    <li>
-                                                        <div class="cart-img f-left">
-                                                            <a href="product-details.html">
-                                                                <img src="{{ asset('assets/front/img/shop/product/cart-sm/16.jpg') }}"
-                                                                    alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <div class="cart-content f-left text-left">
-                                                            <h5>
-                                                                <a href="product-details.html">Consectetur adi </a>
-                                                            </h5>
-                                                            <div class="cart-price">
-                                                                <span class="ammount">1 <i
-                                                                        class="fal fa-times"></i></span>
-                                                                <span class="price">$ 400</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="del-icon f-right mt-30">
-                                                            <a href="#">
-                                                                <i class="fal fa-times"></i>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="cart-img f-left">
-                                                            <a href="product-details.html">
-                                                                <img src="{{ asset('assets/front/img/shop/product/cart-sm/17.jpg') }}"
-                                                                    alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <div class="cart-content f-left text-left">
-                                                            <h5>
-                                                                <a href="product-details.html">Wooden container Bowl
-                                                                </a>
-                                                            </h5>
-                                                            <div class="cart-price">
-                                                                <span class="ammount">1 <i
-                                                                        class="fal fa-times"></i></span>
-                                                                <span class="price">$ 400</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="del-icon f-right mt-30">
-                                                            <a href="#">
-                                                                <i class="fal fa-times"></i>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="cart-img f-left">
-                                                            <a href="product-details.html">
-                                                                <img src="{{ asset('assets/front/img/shop/product/cart-sm/18.jpg') }}"
-                                                                    alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <div class="cart-content f-left text-left">
-                                                            <h5>
-                                                                <a href="product-details.html">Black White Towel </a>
-                                                            </h5>
-                                                            <div class="cart-price">
-                                                                <span class="ammount">1 <i
-                                                                        class="fal fa-times"></i></span>
-                                                                <span class="price">$ 400</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="del-icon f-right mt-30">
-                                                            <a href="#">
-                                                                <i class="fal fa-times"></i>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                <div class="total-price d-flex justify-content-between mb-30">
-                                                    <span>Subtotal:</span>
-                                                    <span>$400.0</span>
-                                                </div>
-                                                <div class="checkout-link">
-                                                    <a href="cart.html" class="os-btn">view Cart</a>
-                                                    <a class="os-btn os-btn-black" href="checkout.html">Checkout</a>
-                                                </div>
+                                            {{ __('Search') }}</a>
+                                    </li>
+                                    <li id ="view_cart_ajax"  data-href="{{ route('cart.header.load') }}">
+                                        @if (Auth::user())
+                                        <a href="{{ route('front.cart') }}" class="cart" >
+                                            <i class="ion-bag" ></i>
+                                            <span >
+                                                @if(count($cart) > 0)
+                                                    {{ __('Cart') }} (<span class="cart_count" data-href="{{ route('cart.qty.get') }}"> {{ count($cart) }}</span>)
+                                                @else
+                                                    {{ __('Cart') }} (<span class="cart_count"  data-href="{{ route('cart.qty.get') }}">{{ __('0') }}</span>)
+                                                @endif
+                                            </span>
+                                        </a>
+                                        @else
+                                        <a href="{{ route('user.login') }}" class="cart" id="header_cart">
+                                            <i class="ion-bag"></i>
+                                            <span> {{ __('Cart') }} </span>
+                                        </a>
+                                        @endif
+                                        <div class="mini-cart" id="header_load_cart">
+                                            <div class="loader-center">
+                                                <img class="loader_ajax" src="{{ asset('assets/front/tenor.gif') }}" alt="">
                                             </div>
                                         </div>
                                     </li>
@@ -173,21 +152,21 @@
                                             <li>
                                                 <div class="my-account">
                                                     <div class="extra-title">
-                                                        <h5>My Account</h5>
+                                                        <h5>{{ __('My Account') }}</h5>
                                                     </div>
                                                     <ul>
                                                         @if(Auth::user())
                                                             <li><a href="{{ route('user.dashboard') }}">{{ Auth::user()->name }}</a></li>
-                                                            <li><a href="wishlist.html">Wishlist</a></li>
-                                                            <li><a href="cart.html">Cart</a></li>
-                                                            <li><a href="checkout.html">Checkout</a></li>
-                                                            <li><a href="{{ route('user.logout') }}">Logout</a></li>
+                                                            <li><a href="{{ route('front.wishlist') }}">{{ __('Wishlist') }}</a></li>
+                                                            <li><a href="{{ route('front.cart') }}">{{ __('Cart') }}</a></li>
+                                                            <li><a href="{{ route('front.checkout') }}">{{ __('Checkout') }}</a></li>
+                                                            <li><a href="{{ route('user.logout') }}">{{ __('Logout') }}</a></li>
                                                         @else
-                                                            <li><a href="{{ route('user.login') }}">My Account</a></li>
-                                                            <li><a href="{{ route('user.login') }}">Wishlist</a></li>
-                                                            <li><a href="{{ route('user.login') }}">Cart</a></li>
-                                                            <li><a href="{{ route('user.login') }}">Checkout</a></li>
-                                                            <li><a href="{{ route('user.register') }}">Create Account</a></li>
+                                                            <li><a href="{{ route('user.login') }}">{{ __('My Account') }}</a></li>
+                                                            <li><a href="{{ route('user.login') }}">{{ __('Wishlist') }}</a></li>
+                                                            <li><a href="{{ route('user.login') }}">{{ __('Cart') }}</a></li>
+                                                            <li><a href="{{ route('user.login') }}">{{ __('Checkout') }}</a></li>
+                                                            <li><a href="{{ route('user.register') }}">{{ __('Create Account') }}</a></li>
                                                         @endif
                                                     </ul>
                                                 </div>
@@ -195,11 +174,11 @@
                                             <li>
                                                 <div class="lang">
                                                     <div class="extra-title">
-                                                        <h5>Language</h5>
+                                                        <h5>{{ __('Language') }}</h5>
                                                     </div>
                                                     <ul>
                                                         @foreach ($langs as $lang)
-                                                        <li><a href="{{ route('changeLanguage',$lang->code) }}">{{ $lang->name }}</a></li>
+                                                        <li><a href="{{ route('changeLanguage',$lang->code) }}" class="{{ $lang->code == Session::get('lang') ? 'active':'' }} ">{{ $lang->name }}</a></li>
                                                         @endforeach
                                                     </ul>
                                                 </div>
@@ -207,13 +186,13 @@
                                             <li>
                                                 <div class="currency">
                                                     <div class="extra-title">
-                                                        <h5>currency</h5>
+                                                        <h5>{{ __('Currency') }}</h5>
                                                     </div>
                                                     <ul>
-                                                        <li><a href="#">USD - US Dollar</a></li>
-                                                        <li><a href="#">EUR - Ruro</a></li>
-                                                        <li><a href="#">GBP - Britis Pound</a></li>
-                                                        <li><a href="#">INR - Indian Rupee</a></li>
+                                                        @foreach ($currencies as $currency)
+                                                            <li><a href="{{ route('changeCurrency', $currency->id) }}" class="{{ $currency->id == Session::get('currency') ? 'active':'' }} ">{{ $currency->name }} ( {{ $currency->sign }} )</a></li>
+
+                                                        @endforeach
                                                     </ul>
                                                 </div>
                                             </li>
@@ -241,26 +220,26 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="header__search-inner text-center">
-                        <form action="#">
+                        <form action="{{ route('front.products') }}" method="GET">
+                            @csrf
                             <div class="header__search-btn">
                                 <a href="javascript:void(0);" class="header__search-btn-close"><i
                                         class="fal fa-times"></i></a>
                             </div>
                             <div class="header__search-header">
-                                <h3>Search</h3>
+                                <h3>{{ __('Search') }}</h3>
                             </div>
                             <div class="header__search-input p-relative">
-                                <input type="text" placeholder="Search for products... ">
+                                <input type="text" name="search" placeholder="{{ __("Search for Products...") }} ">
                                 <button type="submit"><i class="far fa-search"></i></button>
                             </div>
                         </form>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     <div class="body-overlay transition-3"></div>
     <!-- search area end -->
 
@@ -279,7 +258,7 @@
                                         alt="logo"></a>
                             </div>
                             <div class="footer__widget-content">
-                                <p>{{ $commonsetting->footer_text }}</p>
+                                <p>{{ $setting->footer_text }}</p>
                                 <div class="footer__contact">
                                     <ul>
                                         <li>
@@ -287,7 +266,7 @@
                                                 <i class="fal fa-map-marker-alt"></i>
                                             </div>
                                             <div class="text">
-                                                <span>Add: {{ $commonsetting->address }}</span>
+                                                <span>{{ __('Address') }}: {{ $commonsetting->address }}</span>
                                             </div>
                                         </li>
                                         <li>
@@ -295,7 +274,7 @@
                                                 <i class="fal fa-envelope-open-text"></i>
                                             </div>
                                             <div class="text">
-                                                <span>Email:
+                                                <span>{{ __('Email') }}:
                                                     @php
                                                         $email = explode( ',', $commonsetting->email );
                                                         for ($i=0; $i < count($email); $i++) {
@@ -310,7 +289,7 @@
                                                 <i class="fal fa-phone-alt"></i>
                                             </div>
                                             <div class="text">
-                                                <span>Phone:
+                                                <span>{{ __('Phone') }}:
                                                 @php
                                                     $number = explode( ',', $commonsetting->number );
                                                     for ($i=0; $i < count($number); $i++) {
@@ -328,16 +307,20 @@
                     <div class="col-xl-3 col-lg-3 col-md-3 col-12">
                         <div class="footer__widget mb-30">
                             <div class="footer__widget-title">
-                                <h5>information</h5>
+                                <h5>{{ __('Information') }}</h5>
                             </div>
                             <div class="footer__widget-content">
                                 <div class="footer__links">
                                     <ul>
-                                        <li><a href="#">About Us</a></li>
-                                        <li><a href="#">Careers</a></li>
-                                        <li><a href="#">Delivery Inforamtion</a></li>
-                                        <li><a href="#">Privacy Policy</a></li>
-                                        <li><a href="#">Terms & Condition</a></li>
+                                        <li><a href="{{ route('front.products') }}">{{ __('Shop') }}</a></li>
+                                        <li><a href="{{ route('front.contact') }}">{{ __('Help & Contact') }}</a></li>
+                                        @if(Auth::user())
+                                        <li><a href="{{ route('user.dashboard') }}">{{ Auth::user()->name }}</a></li>
+                                        @else
+                                        <li><a href="{{ route('user.login') }}">{{ __('Login') }}</a></li>
+                                        <li><a href="{{ route('user.register') }}">{{ __('Register') }}</a></li>
+                                        @endif
+
                                     </ul>
                                 </div>
                             </div>
@@ -346,7 +329,7 @@
                     <div class="col-xl-3 col-lg-3 col-md-3 col-12">
                         <div class="footer__widget mb-30">
                             <div class="footer__widget-title mb-25">
-                                <h5>Customer Service</h5>
+                                <h5>{{ __('Customer Service') }}</h5>
                             </div>
                             <div class="footer__widget-content">
                                 <div class="footer__links">
@@ -384,6 +367,9 @@
         </div>
     </section>
     <!-- footer area end -->
+    @if ($commonsetting->is_cooki_alert == 1)
+        @include('cookieConsent::index')
+    @endif
 
     <!-- JS here -->
     <script src="{{ asset('assets/front/js/vendor/modernizr-3.5.0.min.js') }}"></script>
@@ -401,9 +387,26 @@
     <script src="{{ asset('assets/front/js/imagesloaded.pkgd.min.js') }}"></script>
     <!-- Sweetalert2 js -->
     <script src="{{ asset('assets/admin/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- DataTable js -->
+    <script src="{{ asset('assets/admin/plugins/data-table/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/data-table/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/data-table/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/data-table/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/data-table/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/data-table/buttons.bootstrap4.min.js') }}"></script>
+
+    {{-- Product js --}}
+    <script src="{{ asset('assets/front/js/product.js') }}"></script>
+
     <script src="{{ asset('assets/front/js/main.js') }}"></script>
 
     @yield('scripts')
+
+    {!!  $commonsetting->tawk_to !!}
+
+    {!!  $commonsetting->messenger !!}
+
+
 </body>
 
 <!-- Mirrored from themepure.net/template/outstock-prv/outstock/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 26 Jun 2022 14:50:16 GMT -->
