@@ -72,9 +72,9 @@
                                                 @endif
                                             </div>
                                         @endif
-                                        <button class="os-btn w-100" type="submit">{{ __('Login') }}</button>
+                                        <button class="os-btn os-btn-black w-100" type="submit">{{ __('Login') }}</button>
                                         <div class="or-divide"><span>or</span></div>
-                                        <a href="{{ route('user.register') }}" class="os-btn os-btn-black w-100">{{ __('Register Now') }}</a>
+                                        <a href="{{ route('user.register') }}" class="os-btn w-100">{{ __('Register Now') }}</a>
                                     </form>
                                 </div>
                             </div>

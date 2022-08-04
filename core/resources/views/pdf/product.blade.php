@@ -155,11 +155,13 @@
                             </thead>
                             <tbody>
 
-
+                                @php
+                                    $i = 0;
+                                @endphp
                                 @foreach ($cart as  $id=>$item)
 
                                 <tr>
-                                  <td>{{ ++$id }}</td>
+                                  <td>{{ ++$i }}</td>
                                     <td>
 
                                         <img src="{{ asset('assets/front/img/'.$item['image']) }}" alt="image" width="100">

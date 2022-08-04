@@ -3,6 +3,7 @@
 $user = json_decode($order->user_info,true);
 $cart = json_decode($order->cart,true);
 $shipping_charge_info = json_decode($order->shipping_charge_info,true);
+$currency_value = App\Model\Currency::where('sign', $order->currency_sign)->first()->value;
 @endphp
 
 <div class="progress-area-step pt-4">
@@ -158,9 +159,12 @@ $shipping_charge_info = json_decode($order->shipping_charge_info,true);
           </tr>
         </thead>
         <tbody>
+            @php
+                $i = 0;
+            @endphp
             @foreach ($cart as $key => $item)
             <tr>
-               <td>{{$key+1}}</td>
+               <td>{{ ++$i }}</td>
                <td>
                    <img  width="80" src="{{asset('assets/front/img/'.$item['image'])}}" alt="product" >
             </td>
@@ -168,9 +172,9 @@ $shipping_charge_info = json_decode($order->shipping_charge_info,true);
                <td>
                   <b>{{__('Quantity')}}:</b> <span>{{$item['qty']}}</span><br>
                </td>
-               <td><span>{{ $order->currency_sign }} {{  Helper::showPrice($item['price']) }} </span></td>
+               <td><span>{{ $order->currency_sign }} {{  Helper::showOrderPrice($item['price'] , $currency_value) }} </span></td>
 
-               <td><span>{{ $order->currency_sign }} {{  Helper::showPrice($item['price'] * $item['qty'])  }} </span></td>
+               <td><span>{{ $order->currency_sign }} {{  Helper::showOrderPrice($item['price'] * $item['qty'] , $currency_value)  }} </span></td>
 
             </tr>
             @endforeach

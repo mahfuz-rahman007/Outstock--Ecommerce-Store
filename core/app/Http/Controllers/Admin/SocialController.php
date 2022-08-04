@@ -60,7 +60,7 @@ class SocialController extends Controller
                 'messege' => 'Social Link Updated Successfully!',
                 'alert' => 'success'
             );
-            return redirect()->route('admin.slinks')->with('notification', $notification);
+            return redirect()->route('admin.Slinks')->with('notification', $notification);
         }
 
         // Delete Social Links

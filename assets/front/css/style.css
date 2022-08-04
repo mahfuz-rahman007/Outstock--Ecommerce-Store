@@ -1099,7 +1099,8 @@ p {
 
 
 .header__action ul li .mini-cart .mini-cart-list {
-  height: 250px;
+  min-height: 100px;
+  max-height: 250px;
   overflow: hidden;
   overflow-y: scroll;
 }
@@ -1132,7 +1133,7 @@ p {
   color: #bc8246;
 }
 .header__action ul li .mini-cart .mini-cart-list li .del-icon a{
-  font-size: 15px;
+  font-size: 18px;
   padding-right: 20px;
 }
 .header__action ul li .mini-cart .total-price {
@@ -4803,11 +4804,11 @@ p.checkout-coupon input[type=text] {
     color: rgb(211, 139, 7) ;
   }
 
-
   /* if any input is checked, make its following siblings grey */
   .post-comments-form #full-stars-example-two .rating__input:checked ~ .rating__label .rating__icon--star {
     color: #ddd;
   }
+  
   
   /* make all stars  on rating group hover */
   .post-comments-form #full-stars-example-two .rating-group:hover .rating__label .rating__icon--star {
@@ -5876,4 +5877,73 @@ p.checkout-coupon input[type=text] {
 label {
   color: black !important;
 }
+
+.product_rating .rate {
+  background-image: url(../img/rate-star.png);
+  background-position: 0 -13px;
+  background-repeat: repeat-x;
+  height: 13px;
+  transition: all 0.5s ease-out 0s;
+  -webkit-transition: all 0.5s ease-out 0s;
+  width: 95px;
+  margin-left: 12px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.product_rating .rating {
+  background-image: url(../img/rate-star.png);
+  background-position: 0 0;
+  background-repeat: repeat-x;
+  height: 13px;
+}
+
+
 /*# sourceMappingURL=style.css.map */
+
+
+  /*-----------------------------
+    ** Allow Cookie css 
+    ------------------------------*/
+    
+    .cookie-consent {
+      position: fixed;
+      background-color: #bc8246;
+      bottom: 0px;
+      width: 100%;
+      padding: 20px 0px;
+      z-index: 10000000000;
+      color: #fff;
+    }
+    
+    .cookie-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      align-self: center;
+    }
+    
+    button.cookie-consent__agree {
+      padding: 12px 20px;
+      color: #ffffff;
+      background-color: #323232;
+      border-color: #323232;
+      opacity: 1;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    button.cookie-consent__agree:hover{
+      background-color: #fff;
+      color: #323232;
+
+    }
+    
+    span.cookie-consent__message {
+      background-color: transparent !important;
+    }
+    
+    span.cookie-consent__message p {
+      margin-bottom: 0px;
+      color: #fff;
+    }
+    

@@ -3,6 +3,8 @@
 namespace App\Helpers;
 
 use App\Model\Currency;
+use App\Model\Product;
+use App\Model\ProductReview;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -191,7 +193,37 @@ class Helper{
             return false;
         }
 
+    }
 
+    public static function hasRating($slug){
+
+        $product = Product::where('slug', $slug)->firstOrFail();
+
+
+        if($product){
+            $ratings = ProductReview::where('product_id', $product->id)->get();
+            if($ratings){
+               $avgrating = ProductReview::where('product_id',$product->id)->avg('rating');
+
+               return  round($avgrating,1) ;
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+
+
+    }
+
+    public static function showOrderPrice($price , $value){
+
+        $price = round( $price * $value , 2);
+
+        $price = number_format($price, 2);
+
+        return $price;
     }
 
 

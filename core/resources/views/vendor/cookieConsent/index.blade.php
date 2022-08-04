@@ -32,8 +32,7 @@
                 document.cookie = name + '=' + value
                     + ';expires=' + date.toUTCString()
                     + ';domain=' + COOKIE_DOMAIN
-                    + ';path=/{{ config('session.secure') ? ';secure' : null }}'
-                    + '{{ config('session.same_site') ? ';samesite='.config('session.same_site') : null }}';
+                    + ';path=/{{ config('session.secure') ? ';secure' : null }}';
             }
 
             if (cookieExists('{{ $cookieConsentConfig['cookie_name'] }}')) {
@@ -51,6 +50,7 @@
                 hideCookieDialog: hideCookieDialog
             };
         })();
+        
     </script>
 
 @endif

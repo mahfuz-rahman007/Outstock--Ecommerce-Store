@@ -28,7 +28,7 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ __('Add Social Link') }}</h3>
                             <div class="card-tools">
-                                <a href="{{ route('admin.slinks') }}" class="btn btn-primary">
+                                <a href="{{ route('admin.Slinks') }}" class="btn btn-primary">
                                     <i class="fas fa-angle-double-left"></i>{{ __('Back') }}
                                 </a>
                             </div>

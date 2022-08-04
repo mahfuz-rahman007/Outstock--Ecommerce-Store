@@ -54,7 +54,6 @@ if( isset( $_GET[ 'color' ] ) ) {
 .banner__content-2 span,
 .banner__content-2 h4 a:hover,
 .shop__header-left .search-box button,
-.sidebar__widget-content .categories .shop-accordion-btn,
 .sidebar__widget-content .categories .shop-accordion-btn.collapsed:hover,
 .sidebar__widget-content .categories .shop-accordion-btn.collapsed.active,
 .sidebar__widget-content .categories__list ul li a:hover,
@@ -89,22 +88,24 @@ if( isset( $_GET[ 'color' ] ) ) {
 .footer__copyright p a,
 .footer__social ul li a:hover,
 .shop-pagination-wrapper nav ul .page-item .page-link,
-.user-dashboard-area .user-menu ul li a:hover, .user-dashboard-area .user-menu ul li a.active  {
+.user-dashboard-area .user-menu ul li a:hover, .user-dashboard-area .user-menu ul li a.active{
     color: <?php echo $color ?> !important;
 }
 
 
 .shop-pagination-wrapper nav ul .page-item.active .page-link {
+    color: #fff !important;
     background-color: <?php echo $color ?> !important;
     border-color: <?php echo $color ?> !important;
 }
 
 .os-btn::after,
-.os-btn:hover,
 .checkbox-form h3,
-.your-order h3{
+.your-order h3,
+.cookie-consent{
     background-color: <?php echo $color ?>!important;
 }
+
 
 
 .os-btn-black:hover,
@@ -118,7 +119,8 @@ if( isset( $_GET[ 'color' ] ) ) {
 .testimonial__wrapper .slick-dots li.slick-active button,
 .contact__input input:focus, .contact__input textarea:focus,
 .error__search input:focus,
-.user-dashboard-area form input:focus  {
+.user-dashboard-area form input:focus,
+.os-btn:hover  {
   border-color: <?php echo $color ?>!important;
 
 }

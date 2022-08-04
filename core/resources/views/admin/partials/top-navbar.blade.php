@@ -11,7 +11,7 @@
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item">
         <div class="nav-link">
-         <a class="btn btn-primary btn-sm d-block mybtn9" href=" " target="_blank"> <i class="far fa-eye"></i>{{ __('Visite Site') }}</a>
+         <a class="btn btn-primary btn-sm d-block mybtn9" href="{{ route('front.index') }}" target="_blank"> <i class="far fa-eye"></i>{{ __('Visite Site') }}</a>
         </div>
       </li>
       <li class="nav-item dropdown">

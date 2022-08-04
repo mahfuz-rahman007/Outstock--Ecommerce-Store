@@ -110,9 +110,9 @@
                                         @endif
 
                                         <div class="mt-10"></div>
-                                        <button class="os-btn w-100" type="submit">Register Now</button>
+                                        <button class="os-btn os-btn-black w-100" type="submit">Register Now</button>
                                         <div class="or-divide"><span>or</span></div>
-                                        <a href="{{ route('user.login') }}" class="os-btn os-btn-black w-100">login Now</a>
+                                        <a href="{{ route('user.login') }}" class="os-btn w-100">login Now</a>
                                     </form>
                                 </div>
                             </div>

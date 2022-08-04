@@ -278,10 +278,6 @@ class ProductController extends Controller
 
                 unset($cart[$user_id][$id]);
 
-                if(count($cart[$user_id]) == 0 ){
-                    unset($cart[$user_id]);
-                }
-
                 Session::put('cart', $cart);
             }
 
@@ -401,7 +397,7 @@ class ProductController extends Controller
 
     // product checkout
     public function productCheckout(Request $request , $slug){
-        
+
         if (!Auth::user()) {
             return redirect(route('user.login'));
         }
@@ -571,6 +567,7 @@ class ProductController extends Controller
             return redirect(route('user.login'));
         }
 
+
         $product = Product::where('slug', $slug)->first();
 
         $id = $product->id;
@@ -584,15 +581,11 @@ class ProductController extends Controller
 
             unset($wishlist[$user_id][$id]);
 
-            if(count($wishlist[$user_id]) == 0 ){
-                unset($wishlist[$user_id]);
-            }
-
             Session::put('wishlist', $wishlist);
+
         }
 
         $count = count($wishlist[$user_id]);
-
 
         return response()->json(['message' => 'Product Removed from  Wishlist!!', 'count'=> $count]);
 

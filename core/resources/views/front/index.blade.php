@@ -111,6 +111,17 @@
                                                 <span class="old-price">{{ Helper::showCurrencyPrice($popular_product->previous_price) }}</span>
                                                 @endif
                                             </div>
+                                            <div class="product_rating row">
+                                                @if (Helper::hasRating($popular_product->slug) != false)
+                                                        <div class="rate">
+                                                            <div class="rating" style="width:{{Helper::hasRating($popular_product->slug) * 20}}%"></div>
+                                                        </div>
+                                                        ({{ Helper::hasRating($popular_product->slug) }})
+
+                                                @else
+                                                    <span class="ml-3 text-muted">No rating(s)</span>
+                                                @endif
+                                            </div>
                                         </div>
                                         <div class="add-cart p-absolute transition-3">
                                             @if(Auth::user())
@@ -246,6 +257,17 @@
                                                 <span class="old-price">{{ Helper::showCurrencyPrice($discount_product->previous_price) }}</span>
                                                 @endif
                                             </div>
+                                            <div class="product_rating row">
+                                                @if (Helper::hasRating($discount_product->slug) != false)
+                                                        <div class="rate">
+                                                            <div class="rating" style="width:{{Helper::hasRating($discount_product->slug) * 20}}%"></div>
+                                                        </div>
+                                                        ({{ Helper::hasRating($discount_product->slug) }})
+
+                                                @else
+                                                    <span class="ml-3 text-muted">No rating(s)</span>
+                                                @endif
+                                            </div>
                                         </div>
                                         <div class="add-cart p-absolute transition-3">
                                             @if(Auth::user())
@@ -278,7 +300,7 @@
                     <div class="client__slider owl-carousel text-center">
                         @foreach ($clients as $client)
                         <div class="client__thumb">
-                            <a href="#"><img src="{{ asset('assets/front/img/'.$client->image) }}"
+                            <a href="{{ $client->link }}"><img src="{{ asset('assets/front/img/'.$client->image) }}"
                                     alt="client"></a>
                         </div>
                         @endforeach

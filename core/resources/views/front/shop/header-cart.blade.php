@@ -50,14 +50,9 @@
                         <span>Subtotal:</span>
                         <span>{{ Helper::showCurrencyPrice($cartTotal) }}</span>
                 </div>
-                        {{-- <span>Total Item:</span>
-                        <span>{{  $countItem }}</span> --}}
-
-
-
             </div>
             <div class="checkout-link">
-                <a href="{{ route('front.cart') }}" class="os-btn">{{ __('View Cart') }}</a>
+                <a class="os-btn" href="{{ route('front.cart') }}">{{ __('View Cart') }}</a>
                 <a class="os-btn os-btn-black" href="{{ route('front.checkout') }}">{{ __('Checkout') }}</a>
             </div>
         </div>

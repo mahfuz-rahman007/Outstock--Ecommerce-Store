@@ -21,7 +21,7 @@ class UserController extends Controller
             return redirect(route('user.login'));
         }
 
-        $data['orders'] = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        $data['orders'] = Order::orderBy('id', 'DESC')->where('user_id', Auth::user()->id)->get();
 
 
         return view('user.dashboard', $data);

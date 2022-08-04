@@ -16,4 +16,6 @@ class Product extends Model
     public function productsubcategory(){
         return $this->belongsTo('App\Model\ProductSubCategory','subcategory_id');
     }
+
+    
 }

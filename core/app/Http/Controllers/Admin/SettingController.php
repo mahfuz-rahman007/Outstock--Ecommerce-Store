@@ -95,7 +95,7 @@ class SettingController extends Controller
             @unlink('assets/front/img/' . $commonsetting->breadcrumb_image);
             $file = $request->file('breadcrumb_image');
             $extension = $file->getClientOriginalExtension();
-            $breadcrumb_image = 'breadcrumb_image_' . '.' . $extension;
+            $breadcrumb_image = 'breadcrumb_image_'.time(). '.' . $extension;
             $file->move('assets/front/img/', $breadcrumb_image);
             $commonsetting->breadcrumb_image = $breadcrumb_image;
         }
@@ -120,6 +120,7 @@ class SettingController extends Controller
     {
 
         $lang = Language::where('code', $request->language)->first()->id;
+
         $sectiontitle = Sectiontitle::where('language_id', $lang)->first();
 
         return view('admin.setting.sectiontitle', compact('sectiontitle'));

@@ -282,7 +282,6 @@ $(function($){
 
     });
 
-
     // payment gateway check
     $(document).on('click', '.product_payment_gateway_check', function(){
 
@@ -318,6 +317,7 @@ $(function($){
         
     });
 
+    // order details view
     $(document).on('click', '.view_order_details' , function(){
         let orderUrl = $(this).attr('data-href');
 
@@ -327,6 +327,7 @@ $(function($){
 
     });
 
+    // add wishlist
     $(document).on('click', '#add_wishlist', function(){
 
         let wishlistUrl = $(this).attr('data-href');
@@ -337,8 +338,6 @@ $(function($){
         $(this).attr('data-href', removeUrl);
         $(this).attr('title', "Remove From Wishlist");
         
-        
-
 
         $.get(wishlistUrl, function(res){
             if(res.message){
@@ -349,30 +348,30 @@ $(function($){
         });
     });
 
+    // remove wishlist
     $(document).on('click', '#remove_wishlist' , function(){
         let wishlistUrl = $(this).attr('data-href');
         let addUrl = $(this).attr('data-add');
 
-
         let removeItem = $(this).attr('rel');
 
+        $(this).removeClass('active');
         $(this).css("color", "#444");
         $(this).attr('id', 'add_wishlist');
         $(this).attr('data-href', addUrl);
         $(this).attr('title', "Add To Wishlist");
 
-
         if(removeItem == null){
             removeItem = false;
         }
-
+        
         $.get(wishlistUrl, function(res){
             if(res.message){
                 success(res.message);
 
                 if(removeItem != false){
                     if(res.count == 0){
-                        $(".cart-table").remove();
+                        $('.card-table').remove();
                         $('.remove_before').html( `
                             <div class="bg-light py-5 text-center">
                                 <h3 class="text-uppercase">Cart is empty!</h3>
@@ -380,8 +379,6 @@ $(function($){
                         );
                     }
                     $('.remove'+removeItem).remove();
-                } else {
-
                 }
 
             } else {

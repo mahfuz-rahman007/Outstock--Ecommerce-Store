@@ -119,17 +119,19 @@
                         <div class="col-xl-7 col-lg-7">
                             <div class="product__modal-content product__modal-content-2">
                                 <h4><a href="product-details.html">{{ $product->title }}</a></h4>
-                                <div class="rating rating-shop mb-15">
-                                    @if ($avgrating)
-                                        <ul class="text-center">
-                                            @for ($i = 0; $i < $avgrating; $i++)
-                                                <li><span><i class="fas fa-star"></i></span></li>
-                                            @endfor
-                                        </ul>
-                                    @endif
+                                <div class="rating rating-shop mb-15 row">
+                                    <span class="product_rating row ml-1">
+                                        @if (Helper::hasRating($product->slug) != false)
+                                                <div class="rate">
+                                                    <div class="rating" style="width:{{Helper::hasRating($product->slug) * 20}}%"></div>
+                                                </div>
+                                                ({{ Helper::hasRating($product->slug) }})
+
+                                        @endif
+                                    </span>
                                     <span class="rating-no ml-10 rating-left">
                                         @if ($rating_count)
-                                            {{ $rating_count }} rating ({{ $rating_count > 1 ? 's' : '' }})
+                                            {{ $rating_count }} rating(s)
                                         @else
                                             No rating(s)
                                         @endif
@@ -285,7 +287,7 @@
                                                             <div class="rating-group">
                                                                 <label class="rating__label" for="rating1">
                                                                     <i
-                                                                        class="rating__icon rating__icon--star fa fa-star"></i>
+                                                                        class="rating__icon rating__icon--star fa fa-star" ></i>
                                                                 </label>
                                                                 <input class="rating__input" name="rating"
                                                                     id="rating1" value="1" type="radio"
@@ -435,6 +437,17 @@
                                             @if ($popular_product->previous_price != '0')
                                                 <span
                                                     class="old-price">{{ Helper::showCurrencyPrice($popular_product->previous_price) }}</span>
+                                            @endif
+                                        </div>
+                                        <div class="product_rating row">
+                                            @if (Helper::hasRating($popular_product->slug) != false)
+                                                    <div class="rate">
+                                                        <div class="rating" style="width:{{Helper::hasRating($popular_product->slug) * 20}}%"></div>
+                                                    </div>
+                                                    ({{ Helper::hasRating($popular_product->slug) }})
+
+                                            @else
+                                                <span class="ml-3 text-muted">No rating(s)</span>
                                             @endif
                                         </div>
                                     </div>

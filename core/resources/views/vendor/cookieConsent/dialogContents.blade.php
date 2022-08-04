@@ -1,11 +1,16 @@
 <div class="js-cookie-consent cookie-consent">
 
-    <span class="cookie-consent__message">
-        {!! trans('cookieConsent::texts.message') !!}
-    </span>
+    <div class="container">
+      <div class="cookie-container">
+        <span class="cookie-consent__message">
+            {!! $setting->cookie_alert_text !!}
+        </span>
 
-    <button class="js-cookie-consent-agree cookie-consent__agree">
-        {{ trans('cookieConsent::texts.agree') }}
-    </button>
+        <button class="js-cookie-consent-agree cookie-consent__agree">
+            {{ __('Allow Cookies') }}
+        </button>
+      </div>
+    </div>
 
 </div>
+
