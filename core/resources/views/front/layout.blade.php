@@ -367,9 +367,6 @@
         </div>
     </section>
     <!-- footer area end -->
-    @if ($commonsetting->is_cooki_alert == 1)
-        @include('cookie-consent::index')
-    @endif
 
     <!-- JS here -->
     <script src="{{ asset('assets/front/js/vendor/modernizr-3.5.0.min.js') }}"></script>
@@ -401,14 +398,5 @@
     <script src="{{ asset('assets/front/js/main.js') }}"></script>
 
     @yield('scripts')
-
-    {!!  $commonsetting->tawk_to !!}
-
-    {!!  $commonsetting->messenger !!}
-
-
 </body>
-
-<!-- Mirrored from themepure.net/template/outstock-prv/outstock/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 26 Jun 2022 14:50:16 GMT -->
-
 </html>
