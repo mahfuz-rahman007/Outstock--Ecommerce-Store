@@ -1,6 +1,6 @@
 @if($cookieConsentConfig['enabled'] && ! $alreadyConsentedWithCookies)
 
-    @include('cookieConsent::dialogContents')
+    @include('cookie-consent::dialogContents')
 
     <script>
 
@@ -50,7 +50,7 @@
                 hideCookieDialog: hideCookieDialog
             };
         })();
-        
+
     </script>
 
 @endif

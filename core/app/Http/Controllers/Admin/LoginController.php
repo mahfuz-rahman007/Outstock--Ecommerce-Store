@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AdminLoginRequest;
 
 class LoginController extends Controller
 {
@@ -12,19 +13,10 @@ class LoginController extends Controller
         return view('admin.login');
     }
 
-    public function authenticate(Request $request){
-
-
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
-
+    public function authenticate(AdminLoginRequest $request){
 
         if(Auth::guard('admin')->attempt(['username' => $request->username,'password' => $request->password])){
-
             return redirect()->route('admin.dashboard');
-            // return view('admin.dashboard');
         }
         return redirect()->back()->with('alert', 'Username and password not matched');
     }
@@ -33,5 +25,4 @@ class LoginController extends Controller
         Auth::guard('admin')->logout();
         return redirect()->route('admin.login');
       }
-
 }

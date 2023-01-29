@@ -120,7 +120,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
     // Basic Information
     Route::get('/basicinfo', 'Admin\SettingController@basicinfo')->name('admin.setting.basicinfo');
-    Route::post('/basicinfo/update/{id}', 'Admin\SettingController@updateBasicinfo')->name('admin.setting.updateBasicinfo');
+    Route::post('/basicinfo/update/{lang}', 'Admin\SettingController@updateBasicinfo')->name('admin.setting.updateBasicinfo');
     Route::post('/commoninfo/update', 'Admin\SettingController@updateCommoninfo')->name('admin.setting.updateCommoninfo');
 
     // ADMIN EMAIL SETTINGS SECTION

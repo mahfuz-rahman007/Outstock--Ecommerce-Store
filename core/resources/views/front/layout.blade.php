@@ -368,7 +368,7 @@
     </section>
     <!-- footer area end -->
     @if ($commonsetting->is_cooki_alert == 1)
-        @include('cookieConsent::index')
+        @include('cookie-consent::index')
     @endif
 
     <!-- JS here -->
