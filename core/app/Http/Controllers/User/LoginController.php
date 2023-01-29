@@ -15,10 +15,6 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => ['logout', 'userLogout']]);
-
-        $setting = Setting::first();
-        Config::set('captcha.sitekey', $setting->google_recaptcha_site_key);
-        Config::set('captcha.secret', $setting->google_recaptcha_secret_key);
     }
 
     public function showLogin(){
@@ -26,6 +22,7 @@ class LoginController extends Controller
     }
 
     public function login(Request $request){
+        dd($request);
         if(Session::has('link')){
             $redirectUrl = Session::get('link');
             Session::forget('link');
@@ -40,19 +37,19 @@ class LoginController extends Controller
              ]);
 
 
-             $setting = Setting::first();
+            //  $setting = Setting::first();
 
-             if($setting->is_recaptcha == 1){
-                 $messages = [
-                     'g-recaptcha-response.required' => 'Please verify that you are not a robot.',
-                     'g-recaptcha-response.captcha' => 'Captcha error! try again later or contact site admin.',
-                 ];
-             }
+            //  if($setting->is_recaptcha == 1){
+            //      $messages = [
+            //          'g-recaptcha-response.required' => 'Please verify that you are not a robot.',
+            //          'g-recaptcha-response.captcha' => 'Captcha error! try again later or contact site admin.',
+            //      ];
+            //  }
 
-             if ($setting->is_recaptcha == 1) {
-                 $rules['g-recaptcha-response'] = 'required|captcha';
-                 $request->validate($rules, $messages);
-             }
+            //  if ($setting->is_recaptcha == 1) {
+            //      $rules['g-recaptcha-response'] = 'required|captcha';
+            //      $request->validate($rules, $messages);
+            //  }
 
 
 

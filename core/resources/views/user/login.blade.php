@@ -60,18 +60,6 @@
                                                 <a href="#">Lost your password?</a>
                                             </span>
                                         </div>
-                                        @if ($commonsetting->is_recaptcha == 1)
-                                            <div class="d-block my-4">
-                                                {!! NoCaptcha::renderJs() !!}
-                                                {!! NoCaptcha::display() !!}
-                                                @if ($errors->has('g-recaptcha-response'))
-                                                @php
-                                                    $errmsg = $errors->first('g-recaptcha-response');
-                                                @endphp
-                                                <p class="text-danger mb-0">{{__("$errmsg")}}</p>
-                                                @endif
-                                            </div>
-                                        @endif
                                         <button class="os-btn os-btn-black w-100" type="submit">{{ __('Login') }}</button>
                                         <div class="or-divide"><span>or</span></div>
                                         <a href="{{ route('user.register') }}" class="os-btn w-100">{{ __('Register Now') }}</a>
