@@ -10,15 +10,21 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BasicinfoRequest;
 use App\Http\Requests\CommoninfoRequest;
 use App\Services\Settings\SettingService;
+use App\Http\Requests\SectiontitleRequest;
 
 class SettingController extends Controller
 {
     public $lang;
-    public function __construct()
+    public function __construct(public SettingService $settingService )
     {
         $this->lang = Language::where('is_default', 1)->first();
     }
 
+    /**
+     * basic info page
+     * @param Request $request
+     * @return view
+     */
     public function basicinfo(Request $request)
     {
         $lang = Language::where('code', $request->language)->first()->id;
@@ -27,9 +33,15 @@ class SettingController extends Controller
         return view('admin.setting.basicinfo', compact('basicinfo', 'commonsetting'));
     }
 
+    /**
+     * update info page
+     * @param BasicinfoRequest $request
+     * @param Language $lang
+     * @return redirect
+     */
     public function updateBasicinfo(BasicinfoRequest $request, Language $lang)
     {
-        $result = (new SettingService())->updateBasicinfo($request->website_title, $request->address, $lang->id);
+        $result = $this->settingService->updateBasicinfo($request->website_title, $request->address, $lang->id);
         $notification = $this->getNotificationMessage('Basic Info Updated successfully!', 'success');
         if (!$result) {
             $notification = $this->getNotificationMessage('Basic Info Updated Failed!', 'error');
@@ -37,76 +49,48 @@ class SettingController extends Controller
         return redirect(route('admin.setting.basicinfo') . '?language=' . $lang->code)->with('notification', $notification);
     }
 
+    /**
+     * update common page
+     * @param CommoninfoRequest $request
+     * @return redirect
+     */
     public function updateCommoninfo(CommoninfoRequest $request)
     {
-        $result = (new SettingService())->updateCommoninfo($request);
+        $result = $this->settingService->updateCommoninfo($request);
         $notification = $this->getNotificationMessage('Commoninfo Updated successfully!', 'success');
         if(!$result){
             $notification = $this->getNotificationMessage('Commoninfo Updating failed!', 'error');
         }
         return redirect(route('admin.setting.basicinfo') . '?language=' . $this->lang->code)->with('notification', $notification);
     }
+
     public function sectiontitle(Request $request)
     {
-
-        $lang = Language::where('code', $request->language)->first()->id;
-
-        $sectiontitle = Sectiontitle::where('language_id', $lang)->first();
-
+        $sectiontitle = $this->settingService->getSectionTitle($request->language);
+        if(!$sectiontitle){
+            $notification = $this->getNotificationMessage('Section Title Error!', 'error');
+            return redirect()->back()->with('notification', $notification);
+        }
         return view('admin.setting.sectiontitle', compact('sectiontitle'));
-
     }
 
-    public function updateSectiontitle(Request $request , $id)
+    public function updateSectiontitle(SectiontitleRequest $request , Language $lang)
     {
-        $request->validate([
-
-            "trending_product_title"   => "required|max:150",
-            "trending_product_sub_title"  => "required|max:300",
-
-            "product_title"  => "required|max:150",
-            "product_sub_title"  => "required|max:300",
-
-            "blog_title"  => "required|max:150",
-            "blog_sub_title"  => "required|max:300",
-
-            "newsletter_title"  => "required|max:150",
-            "newsletter_sub_title"  => "required|max:300",
-
-        ]);
-
-        $lang = Language::where('id', $id)->first();
-
-        $sectiontitle = Sectiontitle::where('language_id', $id)->first();
-
-
-        $sectiontitle->trending_product_title = $request->trending_product_title;
-        $sectiontitle->trending_product_sub_title = $request->trending_product_sub_title;
-
-        $sectiontitle->product_title = $request->product_title;
-        $sectiontitle->product_sub_title = $request->product_sub_title;
-
-        $sectiontitle->blog_title = $request->blog_title;
-        $sectiontitle->blog_sub_title = $request->blog_sub_title;
-
-        $sectiontitle->newsletter_title = $request->newsletter_title;
-        $sectiontitle->newsletter_sub_title = $request->newsletter_sub_title;
-
-        $sectiontitle->save();
-
-        $notification = array(
-            'messege' => 'Section Titles & Subtitles Updated successfully!',
-            'alert' => 'success'
-        );
+        $result = $this->settingService->updateSectionTitle($request,$lang->id);
+        $notification = $this->getNotificationMessage('Section Titles & Subtitles Updated successfully!', 'success');
+        if(!$result){
+            $notification = $this->getNotificationMessage('Updating failed!', 'error');
+        }
         return redirect(route('admin.sectiontitle'). '?language=' . $lang->code)->with('notification', $notification);
-
     }
 
     public function seoinfo(Request $request)
     {
-        $lang = Language::where('code', $request->language)->first()->id;
-        $seoinfo = Setting::where('language_id', $lang)->first();
-
+        $seoinfo = $this->settingService->getSetting($request->language);
+        if(!$seoinfo){
+            $notification = $this->getNotificationMessage('Seoinfo Error!', 'error');
+            return redirect()->back()->with('notification', $notification);
+        }
         return view('admin.setting.seoinfo', compact('seoinfo'));
     }
 
