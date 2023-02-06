@@ -39,14 +39,13 @@
                   </div>
 
                   <div class="card-body">
-                      <form class="form-horizontal" action="{{ route('admin.updateSectiontitle', $sectiontitle->language_id) }}" method="post" enctype="multipart/form-data">
+                      <form class="form-horizontal" action="{{ route('admin.updateSectiontitle', $settingSectiontitle->language_id) }}" method="post" enctype="multipart/form-data">
                           @csrf
-
 
                           <div class="form-group row">
                             <label for="" class="col-sm-3 control-label">{{ __('Trending Product Title') }} <span class="text-danger">*</span> </label>
                             <div class="col-sm-9">
-                                <input type="text" name="trending_product_title" class="form-control" value="{{ $sectiontitle->trending_product_title }}" placeholder="{{ __('Trending Product Title') }}">
+                                <input type="text" name="trending_product_title" class="form-control" value="{{ $settingSectiontitle->trending_product_title }}" placeholder="{{ __('Trending Product Title') }}">
                                 @if($errors->has('trending_product_title'))
                                   <p class="text-danger">{{ $errors->first('trending_product_title') }}</p>
                                 @endif
@@ -56,7 +55,7 @@
                           <div class="form-group row">
                             <label for="" class="col-sm-3 control-label">{{ __('Trending Product Subtitle') }} <span class="text-danger">*</span> </label>
                             <div class="col-sm-9">
-                                <input type="text" name="trending_product_sub_title" class="form-control" value="{{ $sectiontitle->trending_product_sub_title }}" placeholder="{{ __('Trending Product Subtitle') }}">
+                                <input type="text" name="trending_product_sub_title" class="form-control" value="{{ $settingSectiontitle->trending_product_sub_title }}" placeholder="{{ __('Trending Product Subtitle') }}">
                                 @if($errors->has('trending_product_sub_title'))
                                   <p class="text-danger">{{ $errors->first('trending_product_sub_title') }}</p>
                                 @endif
@@ -66,7 +65,7 @@
                           <div class="form-group row">
                             <label for="" class="col-sm-3 control-label">{{ __('Discount Product Title') }} <span class="text-danger">*</span> </label>
                             <div class="col-sm-9">
-                                <input type="text" name="product_title" class="form-control" value="{{ $sectiontitle->product_title }}" placeholder="{{ __('Discount Product Title') }}">
+                                <input type="text" name="product_title" class="form-control" value="{{ $settingSectiontitle->product_title }}" placeholder="{{ __('Discount Product Title') }}">
                                 @if($errors->has('product_title'))
                                   <p class="text-danger">{{ $errors->first('product_title') }}</p>
                                 @endif
@@ -76,7 +75,7 @@
                           <div class="form-group row">
                             <label for="" class="col-sm-3 control-label">{{ __('Discount Product Subtitle') }} <span class="text-danger">*</span> </label>
                             <div class="col-sm-9">
-                                <input type="text" name="product_sub_title" class="form-control" value="{{ $sectiontitle->product_sub_title }}" placeholder="{{ __('Discount Product Subtitle') }}">
+                                <input type="text" name="product_sub_title" class="form-control" value="{{ $settingSectiontitle->product_sub_title }}" placeholder="{{ __('Discount Product Subtitle') }}">
                                 @if($errors->has('product_sub_title'))
                                   <p class="text-danger">{{ $errors->first('product_sub_title') }}</p>
                                 @endif
@@ -86,7 +85,7 @@
                           <div class="form-group row">
                             <label for="" class="col-sm-3 control-label">{{ __('Blog Title') }} <span class="text-danger">*</span> </label>
                             <div class="col-sm-9">
-                                <input type="text" name="blog_title" class="form-control" value="{{ $sectiontitle->blog_title }}" placeholder="{{ __('Blog Title') }}">
+                                <input type="text" name="blog_title" class="form-control" value="{{ $settingSectiontitle->blog_title }}" placeholder="{{ __('Blog Title') }}">
                                 @if($errors->has('blog_title'))
                                   <p class="text-danger">{{ $errors->first('blog_title') }}</p>
                                 @endif
@@ -96,7 +95,7 @@
                           <div class="form-group row">
                             <label for="" class="col-sm-3 control-label">{{ __('Blog Subtitle') }} <span class="text-danger">*</span> </label>
                             <div class="col-sm-9">
-                                <input type="text" name="blog_sub_title" class="form-control" value="{{ $sectiontitle->blog_sub_title }}" placeholder="{{ __('Blog Subtitle') }}">
+                                <input type="text" name="blog_sub_title" class="form-control" value="{{ $settingSectiontitle->blog_sub_title }}" placeholder="{{ __('Blog Subtitle') }}">
                                 @if($errors->has('blog_sub_title'))
                                   <p class="text-danger">{{ $errors->first('blog_sub_title') }}</p>
                                 @endif
@@ -106,7 +105,7 @@
                           <div class="form-group row">
                             <label for="" class="col-sm-3 control-label">{{ __('Newsletter Title') }} <span class="text-danger">*</span> </label>
                             <div class="col-sm-9">
-                                <input type="text" name="newsletter_title" class="form-control" value="{{ $sectiontitle->newsletter_title }}" placeholder="{{ __('Newsletter Title') }}">
+                                <input type="text" name="newsletter_title" class="form-control" value="{{ $settingSectiontitle->newsletter_title }}" placeholder="{{ __('Newsletter Title') }}">
                                 @if($errors->has('newsletter_title'))
                                   <p class="text-danger">{{ $errors->first('newsletter_title') }}</p>
                                 @endif
@@ -116,7 +115,7 @@
                           <div class="form-group row">
                             <label for="" class="col-sm-3 control-label">{{ __('Newsletter Subtitle') }} <span class="text-danger">*</span> </label>
                             <div class="col-sm-9">
-                                <input type="text" name="newsletter_sub_title" class="form-control" value="{{ $sectiontitle->newsletter_sub_title }}" placeholder="{{ __('Newsletter Subtitle') }}">
+                                <input type="text" name="newsletter_sub_title" class="form-control" value="{{ $settingSectiontitle->newsletter_sub_title }}" placeholder="{{ __('Newsletter Subtitle') }}">
                                 @if($errors->has('newsletter_sub_title'))
                                   <p class="text-danger">{{ $errors->first('newsletter_sub_title') }}</p>
                                 @endif

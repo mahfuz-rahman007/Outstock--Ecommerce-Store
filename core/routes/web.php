@@ -171,7 +171,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
     // Seo Info Routes
     Route::get('/seoinfo', [SettingController::class,'seoinfo'])->name('admin.seoinfo');
-    Route::post('/seoinfo/update/{id}', [SettingController::class,'updateSeoinfo'])->name('admin.updateSeoinfo');
+    Route::post('/seoinfo/update/{lang}', [SettingController::class,'updateSeoinfo'])->name('admin.updateSeoinfo');
 
     // Scripts Routes
     Route::get('/scripts', [SettingController::class,'scripts'])->name('admin.scripts');
@@ -183,7 +183,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
     // Cookie Alert
     Route::get('/cookie-alert', [SettingController::class,'cookiealert'])->name('admin.cookiealert');
-    Route::post('/cookie-alert/update/{id}', [SettingController::class,'updateCookiealert'])->name('admin.updateCookiealert');
+    Route::post('/cookie-alert/update/{lang}', [SettingController::class,'updateCookiealert'])->name('admin.updateCookiealert');
 
     // Cusstom Css Routes
     Route::get('/custom-css', [SettingController::class,'customcss'])->name('admin.customcss');

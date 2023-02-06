@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\Settings;
 
 use App\Model\Setting;
@@ -6,9 +7,10 @@ use App\Model\Language;
 use App\Model\Sectiontitle;
 use Illuminate\Support\Facades\DB;
 
-class SettingService{
+class SettingService
+{
 
-    public function updateBasicinfo(string $website_title,string $address,int $lang_id): bool
+    public function updateBasicinfo(string $website_title, string $address, int $lang_id): bool
     {
         try {
             DB::beginTransaction();
@@ -67,7 +69,7 @@ class SettingService{
         }
     }
 
-    public function getSectionTitle($code): object
+    public function getSectionTitle(string $code): object
     {
         try {
             $lang = Language::where('code', $code)->first()->id;
@@ -77,7 +79,7 @@ class SettingService{
         }
     }
 
-    public function updateSectionTitle($request,$langId): bool
+    public function updateSectionTitle(object $request, int $langId): bool
     {
         try {
             DB::beginTransaction();
@@ -99,14 +101,111 @@ class SettingService{
         }
     }
 
-    public function getSetting($langCode): object
+    public function getSetting(string $langCode = null): object
     {
         try {
-            $lang = Language::where('code', $langCode)->first()->id;
-            return Setting::where('language_id', $lang)->first();
+            return Setting::when($langCode, function ($query, $langCode) {
+                $query->where('language_id', Language::where('code', $langCode)->first()->id);
+            })->firstOrFail();
         } catch (\Exception $e) {
             return false;
         }
     }
 
+    public function updateSeoInfo(object $request, int $langId): bool
+    {
+        try {
+            DB::beginTransaction();
+            $seo = Setting::where('language_id', $langId)->first();
+            $seo->meta_keywords = $request->meta_keywords;
+            $seo->meta_description = $request->meta_description;
+            $seo->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return false;
+        }
+    }
+
+    public function updateScript(object $request): bool
+    {
+        try {
+            DB::beginTransaction();
+            Setting::firstOrFail()->update([
+                'disqus' => $request->disqus,
+                'tawk_to' => $request->tawk_to,
+                'google_analytics' => $request->google_analytics,
+                'messenger' => $request->messenger,
+                'google_recaptcha_site_key' => $request->google_recaptcha_site_key,
+                'google_recaptcha_secret_key' => $request->google_recaptcha_secret_key,
+                'is_tawk_to' => $request->is_tawk_to == 'on' ? 1:0,
+                'is_disqus' =>  $request->is_disqus == 'on' ? 1:0,
+                'is_google_analytics' => $request->is_google_analytics == 'on' ? 1:0,
+                'is_recaptcha' => $request->is_recaptcha == 'on' ? 1:0,
+                'is_messenger' => $request->is_messenger == 'on' ? 1:0,
+            ]);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return false;
+        }
+    }
+
+    public function updatePagevisibility(object $request): bool
+    {
+        try {
+            DB::beginTransaction();
+            Setting::firstOrFail()->update([
+                'is_hero_section' => $request->is_hero_section == 'on' ? 1:0,
+                'is_trending_section' => $request->is_trending_section == 'on' ? 1:0,
+                'is_ebanner_section' => $request->is_ebanner_section == 'on' ? 1:0,
+                'is_product_section' => $request->is_product_section == 'on' ? 1:0,
+                'is_client_section' => $request->is_client_section == 'on' ? 1:0,
+                'is_blog_section' => $request->is_blog_section == 'on' ? 1:0,
+                'is_newsletter_section' => $request->is_newsletter_section == 'on' ? 1:0,
+                'is_shop_page' => $request->is_shop_page == 'on' ? 1:0,
+                'is_blog_page' => $request->is_blog_page == 'on' ? 1:0,
+                'is_contact_page' => $request->is_contact_page == 'on' ? 1:0,
+                'is_cooki_alert' => $request->is_cooki_alert == 'on' ? 1:0,
+                'is_hero_section' => $request->is_hero_section == 'on' ? 1:0,
+                'is_hero_section' => $request->is_hero_section == 'on' ? 1:0
+            ]);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return false;
+        }
+    }
+
+    public function updateCookiealert(object $request , int $langId):bool
+    {
+        try {
+            DB::beginTransaction();
+            Setting::where('language_id', $langId)->first()->update([
+                'cookie_alert_text' => $request->cookie_alert_text
+            ]);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return false;
+        }
+    }
+
+    public function getCustomCssFile():string
+    {
+        $custom_css = '/* Write Custom Css Here */';
+        if (file_exists('assets/front/css/dynamic-css.css')) {
+            $custom_css = file_get_contents('assets/front/css/dynamic-css.css');
+        }
+        return $custom_css;
+    }
+
+    public function updateCustomCss(string $css):bool
+    {
+        return file_put_contents('assets/front/css/dynamic-css.css', $css);
+    }
 }
